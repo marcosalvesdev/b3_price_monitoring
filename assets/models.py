@@ -14,7 +14,7 @@ class Asset(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     ticker = models.CharField(
         max_length=10,
-        help_text='Asset code (eg. PETR4, VALE3)'
+        help_text='eg. PETR4, VALE3)'
     )
     type = models.CharField(choices=AssetChoices.choices, max_length=10)
     is_active = models.BooleanField(default=True)
@@ -30,9 +30,11 @@ class Asset(models.Model):
                 return None
 
         asset_validator = AssetValidator(ticker=self.ticker, asset_type=self.type)
-        is_valid = asset_validator.is_valid
-        if not is_valid:
-            raise ValidationError(f"Invalid asset ticker for this asset type.")
+        if not asset_validator.is_valid:
+            raise ValidationError(
+                "We couldn't validate this asset. "
+                "Verify if you inserted the correct ticker to the asset type."
+            )
 
     def clean(self):
         self.assert_validation()
