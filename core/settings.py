@@ -39,7 +39,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-PROJECT_APPS = ['assets']
+PROJECT_APPS = ['assets', 'tunnels']
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 

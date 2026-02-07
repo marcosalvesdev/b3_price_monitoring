@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Asset</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the asset "{{ asset.name }}"?</p>
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'assets:list' %}">Cancel</a>
+</form>
+</body>
+</html>
