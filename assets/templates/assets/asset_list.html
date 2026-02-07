@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Asset List</h1>
+<h3><a href="{% url 'assets:create' %}">Create a new Asset</a></h3>
+<ul>
+    {% for asset in assets %}
+    <li>{{ asset.name }} - {{ asset.description }} |
+        <a href="{% url 'assets:update' asset.id %}">Edit</a> |
+        <a href="{% url 'assets:delete' asset.id %}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
