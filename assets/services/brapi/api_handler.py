@@ -1,9 +1,7 @@
 import logging
 
-import requests
 from decouple import config
 
-from global_utils.http_helpers import status_codes
 from assets.utils.handlers.base_api_handler import BaseApiHandler
 
 logger = logging.getLogger(__name__)

@@ -1,7 +1,6 @@
 import logging
 
 import requests
-from decouple import config
 
 from global_utils.http_helpers import status_codes
 

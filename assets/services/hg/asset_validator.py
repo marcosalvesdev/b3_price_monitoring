@@ -1,5 +1,4 @@
 from assets.utils.validators.base_asset_validator import BaseAssertValidator
-from assets.services.hg.api_handler import HGApiHandler
 
 
 class HgApiAssetValidator(BaseAssertValidator):
