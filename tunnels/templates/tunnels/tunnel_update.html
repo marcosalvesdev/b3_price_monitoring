@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update Tunnel">
+    <a href="{% url 'tunnels:detail' tunnel.id %}">Cancel</a>
+</form>
+{% endblock %}

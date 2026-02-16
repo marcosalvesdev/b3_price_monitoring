@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Price Asset Details</h1>
+
+<table>
+    <tr>
+        <th>Asset</th>
+        <td>{{ asset.name }}</td>
+    </tr>
+    <tr>
+        <th>Ticker</th>
+        <td>{{ asset.ticker }}</td>
+    </tr>
+    <tr>
+        <th>Asset type</th>
+        <td>{{ asset.type }}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ asset.description }}</td>
+    </tr>
+    <tr>
+        <th>Created At</th>
+        <td>{{ asset.created_at }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'assets:update' asset.id %}">Edit</a> |
+<a href="{% url 'assets:delete' asset.id %}">Delete</a> |
+<a href="{% url 'assets:list' %}">Back to List</a>
+{% endblock %}

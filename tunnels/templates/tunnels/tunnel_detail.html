@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Price Tunnel Details</h1>
+
+<table>
+    <tr>
+        <th>Asset</th>
+        <td>{{ tunnel.asset.name }}</td>
+    </tr>
+    <tr>
+        <th>Upper Limit</th>
+        <td>{{ tunnel.upper_limit }}</td>
+    </tr>
+    <tr>
+        <th>Lower Limit</th>
+        <td>{{ tunnel.lower_limit }}</td>
+    </tr>
+    <tr>
+        <th>Check Interval (Minutes)</th>
+        <td>{{ tunnel.check_interval_minutes }}</td>
+    </tr>
+    <tr>
+        <th>Is Active</th>
+        <td>{{ tunnel.is_active|yesno:"Yes,No" }}</td>
+    </tr>
+    <tr>
+        <th>Created At</th>
+        <td>{{ tunnel.created_at }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'tunnels:update' tunnel.id %}">Edit</a> |
+<a href="{% url 'tunnels:delete' tunnel.id %}">Delete</a> |
+<a href="{% url 'tunnels:list' %}">Back to List</a>
+{% endblock %}

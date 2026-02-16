@@ -6,6 +6,7 @@
 <ul>
     {% for asset in assets %}
     <li>{{ asset.name }} - {{ asset.description }} |
+        <a href="{% url 'assets:detail' asset.id %}">View</a> |
         <a href="{% url 'assets:update' asset.id %}">Edit</a> |
         <a href="{% url 'assets:delete' asset.id %}">Delete</a>
     </li>
