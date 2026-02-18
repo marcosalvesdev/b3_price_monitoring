@@ -2,12 +2,12 @@ import os
 
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
-app = Celery('core')
+app = Celery("core")
 
-app.config_from_object('django.conf:settings', namespace='CELERY')
+app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.conf.broker_url = os.getenv('CELERY_BROKER_URL', 'redis://redis:6379/0')
+app.conf.broker_url = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 
 app.autodiscover_tasks()

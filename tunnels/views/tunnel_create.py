@@ -1,13 +1,12 @@
-from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
+from assets.models import Asset
 from tunnels.forms import TunnelCreateForm
 from tunnels.models import PriceTunnel
-from assets.models import Asset
-
-from django.db.utils import IntegrityError
-from django.core.exceptions import ValidationError
 
 
 class TunnelCreateView(LoginRequiredMixin, CreateView):
@@ -18,7 +17,7 @@ class TunnelCreateView(LoginRequiredMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields['asset'].queryset = Asset.objects.filter(user=self.request.user)
+        form.fields["asset"].queryset = Asset.objects.filter(user=self.request.user)
         return form
 
     def post(self, request, *args, **kwargs):
@@ -30,7 +29,9 @@ class TunnelCreateView(LoginRequiredMixin, CreateView):
                 # TODO: Find a way to handle this error outside of the view,
                 #  maybe in the model validation or in the form validation
                 if "unique constraint" in str(err).lower():
-                    err = ValidationError('A tunnel with this combination of asset and price range already exists.')
+                    err = ValidationError(
+                        "A tunnel with this combination of asset and price range already exists."
+                    )
                 form.add_error(field=None, error=err)
 
                 return self.form_invalid(form)

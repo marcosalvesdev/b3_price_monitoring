@@ -2,7 +2,13 @@ from tunnels.utils.validators.tunnel_validator import TunelValidator
 
 
 class TunelExecutionValidator(TunelValidator):
-    def __init__(self, current_asset_price: [float, int], associated_asset_is_active: bool,  *args, **kwargs):
+    def __init__(
+        self,
+        current_asset_price: [float, int],
+        associated_asset_is_active: bool,
+        *args,
+        **kwargs,
+    ):
         super().__init__(*args, **kwargs)
         self.current_assert_price = current_asset_price
         self.associated_asset_is_active = associated_asset_is_active

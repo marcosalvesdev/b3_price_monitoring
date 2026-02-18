@@ -1,9 +1,9 @@
 from django.test import TestCase
+
 from tunnels.utils.validators.tunnel_validator import TunelValidator
 
 
 class TunelValidatorTestCase(TestCase):
-
     def test_limits_are_valid_when_lower_is_less_than_upper(self):
         validator = TunelValidator(lower_limit=1, upper_limit=10, interval=5)
         self.assertTrue(validator.limits_are_valid)

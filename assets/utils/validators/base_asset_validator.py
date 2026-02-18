@@ -1,5 +1,6 @@
-from assets.utils.handlers.base_api_handler import BaseApiHandler
 from django.core.exceptions import ValidationError
+
+from assets.utils.handlers.base_api_handler import BaseApiHandler
 
 
 class BaseAssertValidator:
@@ -7,7 +8,9 @@ class BaseAssertValidator:
 
     def __init__(self, ticker: str, asset_type: str):
         if not isinstance(self.api_handler, BaseApiHandler):
-            raise NotImplementedError("Subclasses must define an api_handler of type BaseApiHandler.")
+            raise NotImplementedError(
+                "Subclasses must define an api_handler of type BaseApiHandler."
+            )
 
         self.ticker = ticker
         self.asset_type = asset_type
@@ -17,7 +20,7 @@ class BaseAssertValidator:
             raise ValidationError(
                 f"Sorry, but our service does not support the {self.asset_type} asset type yet. "
                 f"We are working on it!"
-            )
+            ) from None
         self.data = self.get_data(symbol=self.ticker)
 
     @property

@@ -1,9 +1,9 @@
-from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from assets.models import Asset
-from assets.forms import AssetUpdateForm
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView
+
+from assets.forms import AssetUpdateForm
+from assets.models import Asset
 
 
 class AssetUpdateView(LoginRequiredMixin, UpdateView):

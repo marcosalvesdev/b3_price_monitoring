@@ -6,9 +6,8 @@ from assets.models import Asset, AssetChoices
 class AssetUpdateForm(forms.ModelForm):
     class Meta:
         model = Asset
-        fields = ['name', 'ticker', 'type', 'description']
+        fields = ["name", "ticker", "type", "description"]
         widgets = {
-            'type': forms.Select(choices=AssetChoices.choices),
-            'description': forms.Textarea(attrs={'rows': 4}),
+            "type": forms.Select(choices=AssetChoices.choices),
+            "description": forms.Textarea(attrs={"rows": 4}),
         }
-

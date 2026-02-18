@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,19 +14,41 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Asset',
+            name="Asset",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Name of the asset (eg. Vale S.A.)', max_length=255)),
-                ('ticker', models.CharField(help_text='Asset code (eg. PETR4, VALE3)', max_length=10)),
-                ('is_active', models.BooleanField(default=True)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Name of the asset (eg. Vale S.A.)", max_length=255
+                    ),
+                ),
+                (
+                    "ticker",
+                    models.CharField(help_text="Asset code (eg. PETR4, VALE3)", max_length=10),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                ("description", models.TextField(blank=True, null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('user', 'ticker')},
+                "unique_together": {("user", "ticker")},
             },
         ),
     ]
