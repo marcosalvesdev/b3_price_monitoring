@@ -1,5 +1,4 @@
 class TunelValidator:
-
     def __init__(self, lower_limit: [int, float], upper_limit: [int, float], interval: int):
         self.lower_limit = lower_limit
         self.upper_limit = upper_limit

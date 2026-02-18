@@ -1,5 +1,5 @@
-from decouple import config
 import requests
+from decouple import config
 
 
 class HGApiHandler:
@@ -7,10 +7,7 @@ class HGApiHandler:
     api_key = config("HG_API_KEY")
 
     def get_stock_data(self, symbol: str) -> dict:
-        params = {
-            "symbol": symbol.lower(),
-            "key": self.api_key
-        }
+        params = {"symbol": symbol.lower(), "key": self.api_key}
         response = requests.get(self.base_api_url, params=params)
         if response.status_code == 200:
             return response.json()

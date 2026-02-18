@@ -4,16 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('assets', '0001_initial'),
+        ("assets", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='asset',
-            name='type',
-            field=models.CharField(choices=[('stock', 'Stock'), ('crypto', 'Crypto'), ('etf', 'ETF')], default='stock', max_length=10),
+            model_name="asset",
+            name="type",
+            field=models.CharField(
+                choices=[("stock", "Stock"), ("crypto", "Crypto"), ("etf", "ETF")],
+                default="stock",
+                max_length=10,
+            ),
             preserve_default=False,
         ),
     ]

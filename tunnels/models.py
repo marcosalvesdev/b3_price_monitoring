@@ -5,7 +5,7 @@ from tunnels.utils.validators.tunnel_validator import TunelValidator
 
 
 class PriceTunnel(models.Model):
-    asset = models.ForeignKey("assets.Asset", on_delete=models.CASCADE, related_name='tunnels')
+    asset = models.ForeignKey("assets.Asset", on_delete=models.CASCADE, related_name="tunnels")
     upper_limit = models.DecimalField(max_digits=10, decimal_places=2)
     lower_limit = models.DecimalField(max_digits=10, decimal_places=2)
     check_interval_minutes = models.PositiveIntegerField()
@@ -13,13 +13,16 @@ class PriceTunnel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('asset', 'lower_limit', 'upper_limit')
+        unique_together = ("asset", "lower_limit", "upper_limit")
+
+    def __str__(self):
+        return f"Tunnel of {self.asset.name} from {self.lower_limit} to {self.upper_limit}"
 
     def clean(self):
         validator = TunelValidator(
             lower_limit=self.lower_limit,
             upper_limit=self.upper_limit,
-            interval=self.check_interval_minutes
+            interval=self.check_interval_minutes,
         )
 
         if not validator.limits_are_valid:
@@ -27,5 +30,3 @@ class PriceTunnel(models.Model):
 
         if not validator.interval_is_valid:
             raise ValidationError("Check interval must be greater than zero.")
-
-

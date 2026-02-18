@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 class BaseApiHandler:
-
     def __init__(self, api_name: str = None):
         self.api_name = api_name or ""
         self.headers = {}
@@ -17,7 +16,12 @@ class BaseApiHandler:
 
     def get(self, url: str, symbol: str, retry=3) -> dict:
         try:
-            response = requests.get(url=url, headers=self.headers, timeout=self.timeout, params=self.url_params)
+            response = requests.get(
+                url=url,
+                headers=self.headers,
+                timeout=self.timeout,
+                params=self.url_params,
+            )
             if response.status_code == status_codes.HTTP_200_OK:
                 return response.json()
 

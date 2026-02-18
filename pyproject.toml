@@ -1,7 +1,7 @@
 [project]
 name = "b3-price-monitoring"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Django application for monitoring stock prices on the B3 exchange."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -15,6 +15,29 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "bandit>=1.9.3",
     "django-debug-toolbar>=6.2.0",
+    "pre-commit>=4.5.1",
     "ruff>=0.15.1",
 ]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle
+  "F",    # pyflakes
+  "I",    # isort
+  "B",    # flake8-bugbear
+  "UP",   # pyupgrade
+  "DJ",   # django-specific rules
+  "SIM",  # simplificações
+  "C4",   # comprehensions
+]
+
+ignore = ["DJ001"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["b3_price_monitoring"]
