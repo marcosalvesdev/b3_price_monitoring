@@ -26,7 +26,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls"), name="accounts"),
 ]
 
-if settings.DEBUG:
+if settings.DEBUG and not settings.RUNNING_TESTS:
     from debug_toolbar.toolbar import debug_toolbar_urls
 
     urlpatterns += debug_toolbar_urls()
