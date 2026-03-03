@@ -10,20 +10,20 @@ def tunnel_asset_price_check(*args, **kwargs):
     in the database and notify users if there are significant changes.
     """
 
-    ticker = kwargs.get("asset_ticker")
+    symbol = kwargs.get("asset_symbol")
     asset_id = kwargs.get("asset_id")
     asset_type = kwargs.get("asset_type")
     tunnel_upper_limit = kwargs.get("tunnel_upper_limit")
     tunnel_lower_limit = kwargs.get("tunnel_lower_limit")
 
-    api_handler = asset_api_handler(ticker=ticker, asset_type=asset_type)
+    api_handler = asset_api_handler(symbol=symbol, asset_type=asset_type)
     asset_price = api_handler.asset_price()
 
     if not asset_price:
         raise ValueError(
             {
-                "message": f"Could not retrieve price for {ticker} of type {asset_type}.",
-                "asset": ticker,
+                "message": f"Could not retrieve price for {symbol} of type {asset_type}.",
+                "asset": symbol,
                 "api_response": api_handler.data,
             }
         )

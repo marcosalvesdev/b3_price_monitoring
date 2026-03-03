@@ -3,10 +3,10 @@ from assets.utils.validators.base_asset_validator import BaseAssertValidator
 
 
 class BrapiApiAssetValidator(BaseAssertValidator):
-    def __init__(self, ticker: str, asset_type: str, *args, **kwargs):
-        self.ticker = ticker
+    def __init__(self, symbol: str, asset_type: str, *args, **kwargs):
+        self.symbol = symbol
         self.asset_type = asset_type
-        self.api_handler = BrapiApiHandler(ticker=self.ticker, asset_type=self.asset_type)
+        self.api_handler = BrapiApiHandler(symbol=self.symbol, asset_type=self.asset_type)
 
     @property
     def is_valid(self) -> bool:

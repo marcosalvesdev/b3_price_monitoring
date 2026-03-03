@@ -26,7 +26,7 @@ class AssetCreateView(LoginRequiredMixin, CreateView):
                 # TODO: Find a way to handle this error outside of the view,
                 #  maybe in the model validation or in the form validation
                 if "unique constraint" in str(err).lower():
-                    err = ValidationError("An asset with this ticker already exists.")
+                    err = ValidationError("An asset with this symbol already exists.")
                 form.add_error(field=None, error=err)
 
                 return self.form_invalid(form)

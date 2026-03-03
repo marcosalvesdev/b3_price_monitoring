@@ -4,16 +4,16 @@ from assets.utils.handlers.base_api_handler import BaseApiHandler
 
 
 class AssetApiHandler(BaseApiHandler):
-    def __init__(self, ticker: str = None, asset_type: str = None, *args, **kwargs):
+    def __init__(self, symbol: str = None, asset_type: str = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.ticker = ticker
+        self.symbol = symbol
         self.asset_type = asset_type
 
     @property
     def data(self):
         try:
             get_asset_data = getattr(self, f"get_{self.asset_type}_data")
-            return get_asset_data(symbol=self.ticker)
+            return get_asset_data(symbol=self.symbol)
         except AttributeError:
             raise ValidationError(
                 f"Sorry, but our service does not support the {self.asset_type} asset type yet. "

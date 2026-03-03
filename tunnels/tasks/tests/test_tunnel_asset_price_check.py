@@ -18,7 +18,7 @@ class TunnelAssetPriceCheckTestCase(TestCase):
     def setUp(self):
         """Set up standard test data for each test"""
         self.test_kwargs = {
-            "asset_ticker": "PETR4",
+            "asset_symbol": "PETR4",
             "asset_id": 1,
             "asset_type": "stock",
             "tunnel_upper_limit": 30.0,
@@ -173,7 +173,7 @@ class TunnelAssetPriceCheckTestCase(TestCase):
     def test_asset_api_handler_called_with_correct_params(
         self, mock_asset_handler_func, mock_tunnel_manager_class
     ):
-        """Test that asset_api_handler is called with correct ticker and asset_type"""
+        """Test that asset_api_handler is called with correct symbol and asset_type"""
         # Arrange
         asset_price = 25.0
         mock_api_handler = MagicMock()
@@ -190,7 +190,7 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         tunnel_asset_price_check(**self.test_kwargs)
 
         # Assert - Verify asset_api_handler was instantiated correctly
-        mock_asset_handler_func.assert_called_once_with(ticker="PETR4", asset_type="stock")
+        mock_asset_handler_func.assert_called_once_with(symbol="PETR4", asset_type="stock")
 
     @patch("tunnels.tasks.price_checks.TunnelManager")
     @patch("tunnels.tasks.price_checks.asset_api_handler")
