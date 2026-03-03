@@ -3,3 +3,7 @@ db.sqlite3
 .idea/
 .env
 __pycache__/
+temp/
+.pytest_cache/
+*.log
+.vscode/
