@@ -41,6 +41,6 @@ class BrapiApiHandler(AssetApiHandler):
 
     def asset_price(self):
         if not self.data:
-            raise ValueError(f"No price data found for {self.ticker} of type {self.asset_type}.")
+            raise ValueError(f"No price data found for {self.symbol} of type {self.asset_type}.")
 
         return self.data.get("price")

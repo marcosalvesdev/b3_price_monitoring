@@ -14,7 +14,7 @@ def tunnel_data(tunnel: PriceTunnel) -> dict:
         "tunnel_is_active": tunnel.is_active,
         "asset_id": tunnel.asset_id,
         "asset_name": tunnel.asset.name,
-        "asset_ticker": tunnel.asset.ticker,
+        "asset_symbol": tunnel.asset.symbol,
         "asset_type": tunnel.asset.type,
         "asset_is_active": tunnel.asset.is_active,
     }

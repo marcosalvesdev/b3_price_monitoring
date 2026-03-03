@@ -14,11 +14,7 @@ class AssetChoices(models.TextChoices):
 class Asset(models.Model):
     name = models.CharField(max_length=255, help_text="Name of the asset (eg. Vale S.A.)")
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
-
-    # TODO: Mudar o nome do campo de ticker para symbol e alterar todos os lugares onde ele é
-    # referenciado, para ficar mais genérico e não só relacionado a ações.
-    ticker = models.CharField(max_length=10, help_text="eg. PETR4, VALE3)")
-
+    symbol = models.CharField(max_length=10, help_text="eg. PETR4, VALE3)")
     type = models.CharField(choices=AssetChoices.choices, max_length=10)
     is_active = models.BooleanField(default=True)
     description = models.TextField(blank=True, null=True)
@@ -26,7 +22,7 @@ class Asset(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ("user", "ticker")
+        unique_together = ("user", "symbol")
 
     def __str__(self):
         return self.name
@@ -38,16 +34,16 @@ class Asset(models.Model):
     def assert_validation(self):
         if self.pk:
             asset = Asset.objects.get(pk=self.pk)
-            if asset.ticker == self.ticker and asset.type == self.type:
+            if asset.symbol == self.symbol and asset.type == self.type:
                 return None
 
-        external_validator = BrapiApiAssetValidator(ticker=self.ticker, asset_type=self.type)
+        external_validator = BrapiApiAssetValidator(symbol=self.symbol, asset_type=self.type)
         validator = AssetValidator(external_validator=external_validator)
 
         if not validator.is_valid:
             raise ValidationError(
                 "We couldn't validate this asset. "
-                "Verify if you inserted the correct ticker to the asset type."
+                "Verify if you inserted the correct symbol to the asset type."
             )
 
         return None

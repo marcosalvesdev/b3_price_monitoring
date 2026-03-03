@@ -8,4 +8,4 @@ class AssetPrice(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.asset.ticker} - {self.price} ({self.created_at})"
+        return f"{self.asset.symbol} - {self.price} ({self.created_at})"

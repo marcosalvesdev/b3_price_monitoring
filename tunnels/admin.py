@@ -14,5 +14,5 @@ class PriceTunnelAdmin(admin.ModelAdmin):
         "created_at",
     )
     list_filter = ("is_active", "created_at")
-    search_fields = ("asset__name", "asset__ticker")
+    search_fields = ("asset__name", "asset__symbol")
     ordering = ("-created_at",)
