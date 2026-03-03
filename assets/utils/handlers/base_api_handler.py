@@ -2,7 +2,7 @@ import logging
 
 import requests
 
-from global_utils.http_helpers import status_codes
+from globals.http_helpers import status_codes
 
 logger = logging.getLogger(__name__)
 
