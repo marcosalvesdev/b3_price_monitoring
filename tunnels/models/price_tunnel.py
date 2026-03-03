@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from tunnels.utils.validators.tunnel_validator import TunelValidator
+from tunnels.utils.validators.tunnel_validator import TunnelValidator
 
 
 class PriceTunnel(models.Model):
@@ -19,7 +19,7 @@ class PriceTunnel(models.Model):
         return f"Tunnel of {self.asset.name} from {self.lower_limit} to {self.upper_limit}"
 
     def clean(self):
-        validator = TunelValidator(
+        validator = TunnelValidator(
             lower_limit=self.lower_limit,
             upper_limit=self.upper_limit,
             interval=self.check_interval_minutes,
@@ -30,3 +30,13 @@ class PriceTunnel(models.Model):
 
         if not validator.interval_is_valid:
             raise ValidationError("Check interval must be greater than zero.")
+
+    def ready_to_check(self):
+        if not (self.is_active and self.asset.is_active):
+            raise ValidationError("Tunnel or asset is not active.")
+
+    def asset_price_is_above_upper_limit(self, price: float | int):
+        return price > self.upper_limit
+
+    def asset_price_is_below_lower_limit(self, price: float | int):
+        return price < self.lower_limit

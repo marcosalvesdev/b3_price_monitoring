@@ -9,5 +9,6 @@ app = Celery("core")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.conf.broker_url = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
+app.conf.result_backend = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
 
 app.autodiscover_tasks()
