@@ -1,6 +1,9 @@
 services:
   web:
-    build: .
+    build:
+        context: .
+        args:
+        - ENVIRONMENT=development
     container_name: django_web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
