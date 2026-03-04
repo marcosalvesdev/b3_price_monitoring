@@ -1,5 +1,5 @@
-from tunnels.tasks.price_checks import tunnel_asset_price_check
+from tunnels.tasks.tunnel_asset_price_check import price_check
 
 __all__ = [
-    "tunnel_asset_price_check",
+    "price_check",
 ]
