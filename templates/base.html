@@ -5,6 +5,21 @@
     {% block title %}<title>My Application</title>{% endblock %}
 </head>
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'assets:list' %}">Home</a></li>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                {% else %}
+                    <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
     {% block content %}{% endblock %}
 </body>
 </html>

@@ -41,7 +41,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-PROJECT_APPS = ["assets", "tunnels"]
+PROJECT_APPS = ["assets", "tunnels", "accounts"]
 
 THIRD_PARTY_APPS = ["django_celery_beat"]
 
@@ -151,3 +151,11 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
 # EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="username")
 # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
 # EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+
+# Custom user model
+AUTH_USER_MODEL = "accounts.User"
+
+# Login configuration
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "assets:list"
+LOGOUT_REDIRECT_URL = "accounts:login"
