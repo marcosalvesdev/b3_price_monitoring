@@ -24,7 +24,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
             "asset_name": "Petrobras",
             "tunnel_upper_limit": 30.0,
             "tunnel_lower_limit": 20.0,
-            "emails": ["user@example.com"],
+            "emails_to_notification": ["user@example.com"],
+            "user_name": "user_example",
         }
 
     @patch("tunnels.tasks.tunnel_asset_price_check.TunnelManager")
@@ -282,7 +283,9 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         email_instance.send_email_with_html_content.assert_called_once()
 
         _, kwargs = email_instance.send_email_with_html_content.call_args
-        self.assertEqual(kwargs["template_name"], "notifications/opportunity_notification.html")
+        self.assertEqual(
+            kwargs["template_name"], "tunnels/notifications/opportunity_notification.html"
+        )
         self.assertEqual(kwargs["subject"], "Price Alert: Petrobras has exceeded the upper limit!")
         self.assertEqual(kwargs["recipient_list"], ["user@example.com"])
 
@@ -321,7 +324,9 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         email_instance.send_email_with_html_content.assert_called_once()
 
         _, kwargs = email_instance.send_email_with_html_content.call_args
-        self.assertEqual(kwargs["template_name"], "notifications/opportunity_notification.html")
+        self.assertEqual(
+            kwargs["template_name"], "tunnels/notifications/opportunity_notification.html"
+        )
         self.assertEqual(
             kwargs["subject"], "Price Alert: Petrobras has fallen below the lower limit!"
         )

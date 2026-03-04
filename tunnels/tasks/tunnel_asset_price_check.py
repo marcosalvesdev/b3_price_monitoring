@@ -19,8 +19,11 @@ def price_check(*args, **kwargs):
     asset_type = kwargs.get("asset_type")
     tunnel_upper_limit = kwargs.get("tunnel_upper_limit")
     tunnel_lower_limit = kwargs.get("tunnel_lower_limit")
-    emails_to_notification = kwargs.get("emails", [])
-    template_name = kwargs.get("template_name", "notifications/opportunity_notification.html")
+    emails_to_notification = kwargs.get("emails_to_notification", [])
+    user_name = kwargs.get("user_name", "User")
+    template_name = kwargs.get(
+        "template_name", "tunnels/notifications/opportunity_notification.html"
+    )
 
     api_handler = asset_api_handler(symbol=asset_symbol, asset_type=asset_type)
     asset_price = api_handler.asset_price()
@@ -46,6 +49,7 @@ def price_check(*args, **kwargs):
         EmailNotificationService().send_email_with_html_content(
             template_name=template_name,
             context={
+                "user_name": user_name,
                 "action": "sell",
                 "action_cap": "Sell",
                 "asset_symbol": asset_symbol,
@@ -70,6 +74,7 @@ def price_check(*args, **kwargs):
         EmailNotificationService().send_email_with_html_content(
             template_name=template_name,
             context={
+                "user_name": user_name,
                 "asset_symbol": asset_symbol,
                 "asset_name": asset_name,
                 "current_price": asset_price,

@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 
 class EmailNotificationService:
     """
-    Simple email notification service using Django's send_mail.
+    Simple email notification service using Django's EmailMessage API.
     """
 
     def format_html_template(self, template_name: str, context: dict) -> str:

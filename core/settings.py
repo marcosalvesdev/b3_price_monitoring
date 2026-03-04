@@ -142,11 +142,12 @@ if DEBUG and (not RUNNING_TESTS):
     }
 
 # Email configuration for development/testing
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "test@example.com"
-# For real SMTP testing, you can use:
-# EMAIL_HOST = 'smtp.example.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'your_username'
-# EMAIL_HOST_PASSWORD = 'your_password'
-# EMAIL_USE_TLS = True
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
+
+# For real SMTP testing:
+# EMAIL_HOST = config("EMAIL_HOST", default="smtp.example.com")
+# EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="username")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
