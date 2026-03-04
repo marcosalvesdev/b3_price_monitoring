@@ -140,3 +140,14 @@ if DEBUG and (not RUNNING_TESTS):
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
     }
+
+# Email configuration for development/testing
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
+
+# For real SMTP testing:
+# EMAIL_HOST = config("EMAIL_HOST", default="smtp.example.com")
+# EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="username")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Asset {{ action_cap }} Opportunity Notification</title>
+</head>
+<body>
+    <h2>{{ action_cap }} Opportunity Alert</h2>
+    <p>Dear {{ user_name }},</p>
+    <p>There is a good opportunity to <strong>{{ action }}</strong> the asset <strong>{{ asset_name }}</strong> ({{ asset_symbol }}).</p>
+    <p>
+        {% if action == "buy" %}
+            The current price ({{ current_price }}) is below your tunnel's lower limit ({{ lower_limit }}).
+        {% else %}
+            The current price ({{ current_price }}) is above your tunnel's upper limit ({{ upper_limit }}).
+        {% endif %}
+    </p>
+    <p><strong>Tunnel details:</strong></p>
+    <ul>
+        <li>Asset: {{ asset_name }} ({{ asset_symbol }})</li>
+        <li>Lower limit: {{ lower_limit }}</li>
+        <li>Upper limit: {{ upper_limit }}</li>
+        <li>Current price: {{ current_price }}</li>
+        <li>Checked at: {{ date }}</li>
+    </ul>
+    <p>Consider reviewing your investment strategy and act accordingly.</p>
+    <p>Thank you for using our monitoring service!</p>
+</body>
+</html>

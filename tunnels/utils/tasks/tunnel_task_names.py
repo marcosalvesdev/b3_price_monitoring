@@ -1,2 +1,2 @@
 class TunnelTasksNames:
-    TUNNEL_ASSET_PRICE_CHECK = "tunnels.tasks.price_checks.tunnel_asset_price_check"
+    TUNNEL_ASSET_PRICE_CHECK = "tunnels.tasks.tunnel_asset_price_check.price_check"
