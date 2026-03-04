@@ -45,19 +45,23 @@ def price_check(*args, **kwargs):
 
     tunnel.create_asset_price(asset_id=asset_id)
 
+    default_context_data = {
+        "user_name": user_name,
+        "asset_symbol": asset_symbol,
+        "asset_name": asset_name,
+        "current_price": asset_price,
+        "lower_limit": tunnel_lower_limit,
+        "upper_limit": tunnel_upper_limit,
+        "date": timezone.now(),
+    }
+
     if tunnel.asset_price_is_above_upper_limit(asset_price):
         EmailNotificationService().send_email_with_html_content(
             template_name=template_name,
             context={
-                "user_name": user_name,
+                **default_context_data,
                 "action": "sell",
                 "action_cap": "Sell",
-                "asset_symbol": asset_symbol,
-                "asset_name": asset_name,
-                "current_price": asset_price,
-                "lower_limit": tunnel_lower_limit,
-                "upper_limit": tunnel_upper_limit,
-                "date": timezone.now(),
             },
             subject=f"Price Alert: {asset_name} has exceeded the upper limit!",
             recipient_list=emails_to_notification,
@@ -74,15 +78,9 @@ def price_check(*args, **kwargs):
         EmailNotificationService().send_email_with_html_content(
             template_name=template_name,
             context={
-                "user_name": user_name,
-                "asset_symbol": asset_symbol,
-                "asset_name": asset_name,
-                "current_price": asset_price,
+                **default_context_data,
                 "action": "buy",
                 "action_cap": "Buy",
-                "lower_limit": tunnel_lower_limit,
-                "upper_limit": tunnel_upper_limit,
-                "date": timezone.now(),
             },
             subject=f"Price Alert: {asset_name} has fallen below the lower limit!",
             recipient_list=emails_to_notification,
