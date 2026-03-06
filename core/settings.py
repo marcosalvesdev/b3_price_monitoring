@@ -41,7 +41,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-PROJECT_APPS = ["assets", "tunnels"]
+PROJECT_APPS = ["assets", "tunnels", "accounts"]
 
 THIRD_PARTY_APPS = ["django_celery_beat"]
 
@@ -128,6 +128,31 @@ STATIC_URL = "static/"
 
 STATICFILES_DIR = [BASE_DIR / "static"]
 
+# Media files (user-uploaded content)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Storage backends
+# For development, we use the default FileSystemStorage.
+# For production, you might want to switch to something like S3:
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+
+# For real SMTP testing:
+# EMAIL_HOST = config("EMAIL_HOST", default="smtp.example.com")
+# EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="username")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+
+# Custom user model
+AUTH_USER_MODEL = "accounts.User"
+
+# Login configuration
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "assets:list"
+LOGOUT_REDIRECT_URL = "accounts:login"
+
 # Development configs
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
@@ -144,10 +169,3 @@ if DEBUG and (not RUNNING_TESTS):
 # Email configuration for development/testing
 EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
-
-# For real SMTP testing:
-# EMAIL_HOST = config("EMAIL_HOST", default="smtp.example.com")
-# EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
-# EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="username")
-# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
-# EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)

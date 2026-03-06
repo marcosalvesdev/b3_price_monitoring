@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -13,7 +14,7 @@ class AssetChoices(models.TextChoices):
 
 class Asset(models.Model):
     name = models.CharField(max_length=255, help_text="Name of the asset (eg. Vale S.A.)")
-    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     symbol = models.CharField(max_length=10, help_text="eg. PETR4, VALE3)")
     type = models.CharField(choices=AssetChoices.choices, max_length=10)
     is_active = models.BooleanField(default=True)

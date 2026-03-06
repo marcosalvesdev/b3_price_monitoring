@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Password Reset Confirmation{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Password Reset Email Sent</h3>
+                </div>
+                <div class="card-body">
+                    <p>An email has been sent to {{ email }} address with instructions to reset your password. Please check your inbox and follow the instructions.</p>
+                    <a href="{% url 'accounts:login' %}" class="btn btn-primary w-100">Go to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

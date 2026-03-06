@@ -16,8 +16,12 @@ RUN apk update && apk add --no-cache \
 
 COPY pyproject.toml ./
 
-# TODO: Add a form to install only production dependencies, and not dev dependencies, for the runtime image
-RUN uv pip install . --no-cache --system --group dev
+ARG ENVIRONMENT=production
+RUN if [ "$ENVIRONMENT" = "development" ]; then \
+    uv pip install . --no-cache --system --group dev; \
+    else \
+    uv pip install . --no-cache --system; \
+    fi
 
 FROM python:3.12-alpine
 
