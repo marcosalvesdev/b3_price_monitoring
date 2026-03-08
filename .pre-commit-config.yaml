@@ -28,8 +28,9 @@ repos:
       entry: docker compose exec web python manage.py test -v 2 --keepdb --failfast
       language: system
       pass_filenames: false
-      always_run: true
-      stages: [push]
+      exclude: >
+        \.pre-commit-config\.yaml|\.md|\.txt|\.yml|\.yaml|\.json|\.lock|\.gitignore|\.env.*|\.dockerignore
+      stages: [pre-push]
 
 # TODO: Bandit is not working. Fix it to re-enable the hook.
 #  - repo: https://github.com/PyCQA/bandit

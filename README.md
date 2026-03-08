@@ -73,11 +73,11 @@ Imagine you're interested in **Vale S.A. (VALE3)**:
 
 ## ✨ Why Use B3 Price Monitoring?
 
-✅ **Save Time** - No need to constantly check market prices manually  
-✅ **Never Miss Opportunities** - 24/7 automated monitoring while you sleep  
-✅ **Make Informed Decisions** - Get alerts only when prices reach your strategic levels  
-✅ **Stay Organized** - Manage all your assets in one dashboard  
-✅ **Reduce Stress** - Let automation handle the monitoring  
+✅ **Save Time** - No need to constantly check market prices manually
+✅ **Never Miss Opportunities** - 24/7 automated monitoring while you sleep
+✅ **Make Informed Decisions** - Get alerts only when prices reach your strategic levels
+✅ **Stay Organized** - Manage all your assets in one dashboard
+✅ **Reduce Stress** - Let automation handle the monitoring
 
 ---
 
