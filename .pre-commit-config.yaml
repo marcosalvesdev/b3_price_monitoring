@@ -27,6 +27,7 @@ repos:
       name: Run project tests
       entry: docker compose exec web python manage.py test -v 2 --keepdb --failfast
       language: system
+      always_run: true
       pass_filenames: false
       exclude: >
         \.pre-commit-config\.yaml|\.md|\.txt|\.yml|\.yaml|\.json|\.lock|\.gitignore|\.env.*|\.dockerignore
