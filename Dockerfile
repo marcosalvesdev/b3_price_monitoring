@@ -18,9 +18,9 @@ COPY pyproject.toml ./
 
 ARG ENVIRONMENT=production
 RUN if [ "$ENVIRONMENT" = "development" ]; then \
-    uv pip install . --no-cache --system --group dev; \
+    uv pip install -r pyproject.toml --no-cache --system --group dev; \
     else \
-    uv pip install . --no-cache --system; \
+    uv pip install -r pyproject.toml --no-cache --system; \
     fi
 
 FROM python:3.12-alpine

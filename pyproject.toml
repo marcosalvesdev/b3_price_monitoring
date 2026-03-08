@@ -43,6 +43,3 @@ ignore = ["DJ001"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["b3_price_monitoring"]
-
-[tool.setuptools]
-packages = ["b3_price_monitoring"]
