@@ -29,6 +29,14 @@ repos:
       language: system
       pass_filenames: false
       always_run: true
+      exclude: |
+        ^(
+          .pre-commit-config.yaml
+          |.*\.md
+          |.*\.env-example
+          |.gitignore
+          |.dockerignore
+        )$
       stages: [pre-push]
 
 # TODO: Bandit is not working. Fix it to re-enable the hook.
