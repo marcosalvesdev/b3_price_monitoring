@@ -1,12 +1,35 @@
 {% extends 'base.html' %}
 
+{% block title %}<title>Sign In — B3 Monitor</title>{% endblock %}
+
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log In</button>
-    <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></p>
-    <p>Forgot your password? <a href="{% url 'accounts:password_reset' %}">Reset it here</a></p>
-</form>
+<main class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-100" style="max-width: 480px;">
+        <h2 class="fw-semibold mb-4 text-center">Sign In</h2>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        {% include "partials/_form_field.html" with field=field %}
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-dark w-100 mt-2">Sign In</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <p class="mb-1"><a href="{% url 'accounts:password_reset' %}" class="text-muted">Forgot your password?</a></p>
+                    <p class="mb-0">Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
 
+{% block title %}<title>Create Tunnel — B3 Monitor</title>{% endblock %}
+
 {% block content %}
-<h1>Create Tunnel</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-</form>
+<main class="container py-4" style="max-width: 960px;">
+    <h2 class="fw-semibold mb-4">Create Tunnel</h2>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    {% include "partials/_form_field.html" with field=field %}
+                {% endfor %}
+
+                {% include "partials/_form_actions.html" with submit_label="Create Tunnel" cancel_url=cancel_url %}
+            </form>
+        </div>
+    </div>
+</main>
 {% endblock %}

@@ -1,14 +1,14 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}<title>Edit Tunnel — B3 Monitor</title>{% endblock %}
+{% block title %}<title>Edit Profile — B3 Monitor</title>{% endblock %}
 
 {% block content %}
 <main class="container py-4" style="max-width: 960px;">
-    <h2 class="fw-semibold mb-4">Edit Tunnel</h2>
+    <h2 class="fw-semibold mb-4">Edit Profile</h2>
 
     <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
-            <form method="post" novalidate>
+            <form method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
 
                 {% if form.non_field_errors %}

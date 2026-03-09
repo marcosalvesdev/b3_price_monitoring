@@ -1,36 +1,54 @@
 {% extends 'base.html' %}
 
+{% block title %}<title>Tunnel Details — B3 Monitor</title>{% endblock %}
+
 {% block content %}
-<h1>Price Tunnel Details</h1>
+<main class="container py-4" style="max-width: 960px;">
+    <h2 class="fw-semibold mb-4">Tunnel Details</h2>
 
-<table>
-    <tr>
-        <th>Asset</th>
-        <td>{{ tunnel.asset.name }}</td>
-    </tr>
-    <tr>
-        <th>Upper Limit</th>
-        <td>{{ tunnel.upper_limit }}</td>
-    </tr>
-    <tr>
-        <th>Lower Limit</th>
-        <td>{{ tunnel.lower_limit }}</td>
-    </tr>
-    <tr>
-        <th>Check Interval (Minutes)</th>
-        <td>{{ tunnel.check_interval_minutes }}</td>
-    </tr>
-    <tr>
-        <th>Is Active</th>
-        <td>{{ tunnel.is_active|yesno:"Yes,No" }}</td>
-    </tr>
-    <tr>
-        <th>Created At</th>
-        <td>{{ tunnel.created_at }}</td>
-    </tr>
-</table>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <h5 class="card-title fw-semibold mb-3">{{ tunnel.asset.name }} — {{ tunnel.asset.symbol }}</h5>
 
-<a href="{% url 'tunnels:update' tunnel.id %}">Edit</a> |
-<a href="{% url 'tunnels:delete' tunnel.id %}">Delete</a> |
-<a href="{% url 'tunnels:list' %}">Back to List</a>
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Asset</small>
+                    <p class="mb-0 fw-semibold">{{ tunnel.asset.name }} ({{ tunnel.asset.symbol }})</p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Status</small>
+                    <p class="mb-0">
+                        {% if tunnel.is_active %}
+                            <span class="badge bg-success-subtle text-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-danger-subtle text-danger">Inactive</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Upper Limit</small>
+                    <p class="mb-0 font-monospace fw-bold text-danger">R$ {{ tunnel.upper_limit }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Lower Limit</small>
+                    <p class="mb-0 font-monospace fw-bold text-success">R$ {{ tunnel.lower_limit }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Check Interval</small>
+                    <p class="mb-0">{{ tunnel.check_interval_minutes }} minutes</p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Created At</small>
+                    <p class="mb-0 text-muted">{{ tunnel.created_at }}</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <a href="{% url 'tunnels:update' tunnel.id %}" class="btn btn-sm btn-outline-dark">Edit</a>
+                <a href="{% url 'tunnels:delete' tunnel.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                <a href="{% url 'tunnels:list' %}" class="btn btn-sm btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

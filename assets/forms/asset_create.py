@@ -8,6 +8,8 @@ class AssetCreateForm(forms.ModelForm):
         model = Asset
         fields = ["name", "symbol", "type", "description"]
         widgets = {
-            "type": forms.Select(choices=AssetChoices.choices),
-            "description": forms.Textarea(attrs={"rows": 4}),
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "symbol": forms.TextInput(attrs={"class": "form-control"}),
+            "type": forms.Select(choices=AssetChoices.choices, attrs={"class": "form-select"}),
+            "description": forms.Textarea(attrs={"rows": 4, "class": "form-control"}),
         }

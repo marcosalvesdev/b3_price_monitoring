@@ -1,32 +1,36 @@
 {% extends "base.html" %}
-{% block title %}Password Reset Confirm{% endblock %}
+
+{% block title %}<title>Set New Password — B3 Monitor</title>{% endblock %}
+
 {% block content %}
+<main class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-100" style="max-width: 480px;">
+        <h2 class="fw-semibold mb-4 text-center">Set New Password</h2>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                {% if validlink %}
+                    <p class="text-muted mb-4">Please enter your new password twice to confirm.</p>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
 
-    {% if validlink %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
 
-        <p>Please enter your new password twice so we can verify you typed it in correctly.</p>
-        <form method="post">
-            {% csrf_token %}
+                        {% for field in form %}
+                            {% include "partials/_form_field.html" with field=field %}
+                        {% endfor %}
 
-            <div class="mb-3">
-                <label for="id_new_password1" class="form-label">New password:</label>
-                {{ form.new_password1 }}
-                {{ form.new_password1.errors }}
+                        <button type="submit" class="btn btn-dark w-100">Reset Password</button>
+                    </form>
+                {% else %}
+                    <p class="text-muted mb-4">The password reset link was invalid, possibly because it has already been used.</p>
+                    <a href="{% url 'accounts:password_reset' %}" class="btn btn-dark w-100">Request a New Link</a>
+                {% endif %}
             </div>
-
-            <div class="mb-3">
-                <label for="id_new_password2" class="form-label">Confirm password:</label>
-                {{ form.new_password2 }}
-                {{ form.new_password2.errors }}
-            </div>
-
-            <button type="submit" class="btn btn-primary">Change my password</button>
-        </form>
-
-    {% else %}
-
-        <p>"The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."</p>
-
-    {% endif %}
-
+        </div>
+    </div>
+</main>
 {% endblock %}
