@@ -1,6 +1,9 @@
 from django.urls import path
 
 from accounts.views import (
+    ProfileDeleteView,
+    ProfileDetailView,
+    ProfileUpdateView,
     UserLoginView,
     UserLogoutView,
     UserPasswordChangeDoneView,
@@ -30,4 +33,7 @@ urlpatterns = [
         name="password_reset_confirm",
     ),
     path("reset/done/", UserPasswordResetCompleteView.as_view(), name="password_reset_complete"),
+    path("profile/", ProfileDetailView.as_view(), name="profile"),
+    path("profile/update/", ProfileUpdateView.as_view(), name="profile_update"),
+    path("profile/delete/", ProfileDeleteView.as_view(), name="profile_delete"),
 ]

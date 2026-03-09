@@ -1,1 +1,2 @@
+from accounts.forms.profile_update import ProfileUpdateForm as ProfileUpdateForm
 from accounts.forms.user_registration import UserRegistrationForm as UserRegistrationForm
