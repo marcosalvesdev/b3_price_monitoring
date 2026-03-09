@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Logged Out{% endblock %}
+{% block title %}<title>Logged Out — B3 Monitor</title>{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>You have been logged out</h1>
-    <p>You have successfully logged out of your account.</p>
-    <a href="{% url 'assets:list' %}" class="btn btn-primary">Return to Home</a>
-</div>
+<main class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-100" style="max-width: 480px;">
+        <h2 class="fw-semibold mb-4 text-center">Logged Out</h2>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 text-center">
+                <p class="mb-4">You have successfully logged out of your account.</p>
+                <a href="{% url 'accounts:login' %}" class="btn btn-dark w-100">Sign In Again</a>
+                <p class="text-muted mt-3 mb-0">
+                    Or <a href="{% url 'assets:list' %}">return to Home</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

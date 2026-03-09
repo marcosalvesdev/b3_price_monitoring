@@ -1,0 +1,13 @@
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <h5 class="card-title fw-semibold mb-3">{{ title|default:"Confirm Deletion" }}</h5>
+        <p>Are you sure you want to delete <strong>{{ item_name }}</strong>? This action cannot be undone.</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                <a href="{{ cancel_url }}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

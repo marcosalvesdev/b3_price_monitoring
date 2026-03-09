@@ -1,32 +1,109 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}<title>{{ asset.symbol }} — B3 Monitor</title>{% endblock %}
 
 {% block content %}
-<h1>Price Asset Details</h1>
+<main class="container py-4" style="max-width: 960px;">
+    <h2 class="fw-semibold mb-4">{{ asset.symbol }} — {{ asset.name }}</h2>
 
-<table>
-    <tr>
-        <th>Asset</th>
-        <td>{{ asset.name }}</td>
-    </tr>
-    <tr>
-        <th>symbol</th>
-        <td>{{ asset.symbol }}</td>
-    </tr>
-    <tr>
-        <th>Asset type</th>
-        <td>{{ asset.type }}</td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>{{ asset.description }}</td>
-    </tr>
-    <tr>
-        <th>Created At</th>
-        <td>{{ asset.created_at }}</td>
-    </tr>
-</table>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h5 class="card-title fw-semibold mb-3">Asset Details</h5>
 
-<a href="{% url 'assets:update' asset.id %}">Edit</a> |
-<a href="{% url 'assets:delete' asset.id %}">Delete</a> |
-<a href="{% url 'assets:list' %}">Back to List</a>
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Name</small>
+                    <p class="mb-0 fw-semibold">{{ asset.name }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Symbol</small>
+                    <p class="mb-0 font-monospace fw-semibold">{{ asset.symbol }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Type</small>
+                    <p class="mb-0">
+                        <span class="badge bg-secondary-subtle text-secondary">{{ asset.get_type_display }}</span>
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Status</small>
+                    <p class="mb-0">
+                        {% if asset.is_active %}
+                            <span class="badge bg-success-subtle text-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-danger-subtle text-danger">Inactive</span>
+                        {% endif %}
+                    </p>
+                </div>
+                {% if asset.description %}
+                <div class="col-12">
+                    <small class="text-muted text-uppercase">Description</small>
+                    <p class="mb-0">{{ asset.description }}</p>
+                </div>
+                {% endif %}
+                <div class="col-sm-6">
+                    <small class="text-muted text-uppercase">Created</small>
+                    <p class="mb-0 text-muted">{{ asset.created_at|date:"M d, Y" }}</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <a href="{% url 'assets:update' asset.pk %}" class="btn btn-sm btn-outline-dark">Edit</a>
+                <a href="{% url 'assets:delete' asset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-semibold mb-0">Price Tunnels</h5>
+        <a href="{% url 'tunnels:create' %}" class="btn btn-sm btn-dark">Create Tunnel</a>
+    </div>
+
+    {% with tunnels=asset.tunnels.all %}
+    {% if tunnels %}
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Lower Limit</th>
+                            <th>Upper Limit</th>
+                            <th>Interval</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tunnel in tunnels %}
+                        <tr>
+                            <td class="font-monospace fw-bold text-success">R$ {{ tunnel.lower_limit }}</td>
+                            <td class="font-monospace fw-bold text-danger">R$ {{ tunnel.upper_limit }}</td>
+                            <td>{{ tunnel.check_interval_minutes }} min</td>
+                            <td>
+                                {% if tunnel.is_active %}
+                                    <span class="badge bg-success-subtle text-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger-subtle text-danger">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <a href="{% url 'tunnels:detail' tunnel.pk %}" class="btn btn-sm btn-outline-dark">View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        {% include "partials/_empty_state.html" with message="No tunnels configured for this asset." %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="mt-4">
+        <a href="{% url 'assets:list' %}" class="btn btn-outline-secondary">Back to Assets</a>
+    </div>
+</main>
 {% endblock %}

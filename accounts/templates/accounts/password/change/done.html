@@ -1,22 +1,17 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %}Password Changed{% endblock %}
+{% block title %}<title>Password Changed — B3 Monitor</title>{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Password Changed Successfully</h3>
-                </div>
-                <div class="card-body">
-                    <p>Your password has been changed successfully.</p>
-                    <a href="{% url 'accounts:login' %}" class="btn btn-primary w-100">Go to Login</a>
-                </div>
+<main class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-100" style="max-width: 480px;">
+        <h2 class="fw-semibold mb-4 text-center">Password Changed</h2>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 text-center">
+                <p class="mb-4">Your password has been changed successfully.</p>
+                <a href="{% url 'accounts:profile' %}" class="btn btn-dark w-100">Go to Profile</a>
             </div>
         </div>
     </div>
-</div>
+</main>
 {% endblock %}
