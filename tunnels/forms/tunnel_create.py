@@ -26,6 +26,7 @@ class TunnelCreateForm(forms.ModelForm):
             "check_interval_minutes": forms.NumberInput(attrs={"class": "form-control"}),
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
+        required_fields = ["asset", "upper_limit", "lower_limit", "check_interval_minutes"]
 
     def save(self, **kwargs):
         tunnel = super().save(commit=True)

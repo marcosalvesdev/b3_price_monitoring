@@ -13,3 +13,4 @@ class TunnelUpdateForm(forms.ModelForm):
             "check_interval_minutes": forms.NumberInput(attrs={"class": "form-control"}),
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
+        required_fields = ["upper_limit", "lower_limit", "check_interval_minutes"]

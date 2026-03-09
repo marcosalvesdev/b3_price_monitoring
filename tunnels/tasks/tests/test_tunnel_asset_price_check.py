@@ -15,9 +15,10 @@ class TunnelAssetPriceCheckTestCase(TestCase):
     - Testing error handling when API fails
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Set up standard test data for each test"""
-        self.test_kwargs = {
+        cls.test_kwargs = {
             "asset_symbol": "PETR4",
             "asset_id": 1,
             "asset_type": "stock",
