@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from accounts.models import User
 from assets.models import Asset
+from globals.http_helpers import status_codes
 
 
 class TunnelListViewTests(TestCase):
@@ -29,13 +30,13 @@ class TunnelListViewTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertNotEqual(response.status_code, 200)
-        self.assertIn("/accounts/login/", response.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={self.url}")
 
     def test_list_returns_200_for_authenticated_user(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
 
     def test_list_uses_correct_template(self):
         self.client.login(username="testuser", password="testpass123")
@@ -60,6 +61,7 @@ class TunnelListViewTests(TestCase):
 
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         tunnels = response.context["tunnels"]
         self.assertEqual(len(tunnels), 1)
         self.assertEqual(tunnels[0].pk, user_tunnel.pk)
@@ -67,10 +69,12 @@ class TunnelListViewTests(TestCase):
     def test_list_empty_when_user_has_no_tunnels(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         tunnels = response.context["tunnels"]
         self.assertEqual(len(tunnels), 0)
 
     def test_list_context_name_is_tunnels(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertIn("tunnels", response.context)

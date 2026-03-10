@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from accounts.models import User
 from assets.models import Asset
+from globals.http_helpers import status_codes
 from tunnels.models import PriceTunnel
 
 
@@ -42,13 +43,13 @@ class TunnelDeleteViewTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertNotEqual(response.status_code, 200)
-        self.assertIn("/accounts/login/", response.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={self.url}")
 
     def test_delete_get_returns_200_for_authenticated_user(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
 
     def test_delete_uses_correct_template(self):
         self.client.login(username="testuser", password="testpass123")
@@ -69,11 +70,25 @@ class TunnelDeleteViewTests(TestCase):
     def test_delete_post_removes_tunnel(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.post(self.url)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
         self.assertRedirects(response, reverse("tunnels:list"))
         self.assertFalse(PriceTunnel.objects.filter(pk=self.tunnel.pk).exists())
 
     def test_delete_does_not_remove_other_tunnels(self):
         self.client.login(username="testuser", password="testpass123")
         self.client.post(self.url)
+        self.assertTrue(PriceTunnel.objects.filter(pk=self.other_tunnel.pk).exists())
+
+    def test_delete_other_user_tunnel_returns_404(self):
+        self.client.login(username="testuser", password="testpass123")
+        other_url = reverse("tunnels:delete", kwargs={"pk": self.other_tunnel.pk})
+        response = self.client.get(other_url)
+        self.assertEqual(response.status_code, status_codes.HTTP_404_NOT_FOUND)
+        self.assertTrue(PriceTunnel.objects.filter(pk=self.other_tunnel.pk).exists())
+
+    def test_delete_post_other_user_tunnel_returns_404(self):
+        self.client.login(username="testuser", password="testpass123")
+        other_url = reverse("tunnels:delete", kwargs={"pk": self.other_tunnel.pk})
+        response = self.client.post(other_url)
+        self.assertEqual(response.status_code, status_codes.HTTP_404_NOT_FOUND)
         self.assertTrue(PriceTunnel.objects.filter(pk=self.other_tunnel.pk).exists())

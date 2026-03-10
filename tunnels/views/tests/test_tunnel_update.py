@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from accounts.models import User
 from assets.models import Asset
+from globals.http_helpers import status_codes
 from tunnels.models import PriceTunnel
 
 
@@ -42,13 +43,13 @@ class TunnelUpdateViewTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertNotEqual(response.status_code, 200)
-        self.assertIn("/accounts/login/", response.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={self.url}")
 
     def test_update_get_returns_200_for_owner(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
 
     def test_update_uses_correct_template(self):
         self.client.login(username="testuser", password="testpass123")
@@ -75,7 +76,7 @@ class TunnelUpdateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
         self.assertRedirects(response, reverse("tunnels:list"))
         self.tunnel.refresh_from_db()
         self.assertEqual(self.tunnel.upper_limit, 200.00)
@@ -91,7 +92,7 @@ class TunnelUpdateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertTrue(response.context["form"].errors)
 
     def test_update_invalid_post_lower_greater_than_upper_returns_errors(self):
@@ -103,5 +104,25 @@ class TunnelUpdateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertTrue(response.context["form"].errors)
+
+    def test_update_returns_404_for_other_user_tunnel(self):
+        self.client.login(username="testuser", password="testpass123")
+        other_tunnel_url = reverse("tunnels:update", kwargs={"pk": self.other_tunnel.pk})
+        response = self.client.get(other_tunnel_url)
+        self.assertEqual(response.status_code, status_codes.HTTP_404_NOT_FOUND)
+
+    def test_update_post_returns_404_for_other_user_tunnel(self):
+        self.client.login(username="testuser", password="testpass123")
+        other_tunnel_url = reverse("tunnels:update", kwargs={"pk": self.other_tunnel.pk})
+        data = {
+            "upper_limit": "300.00",
+            "lower_limit": "100.00",
+            "check_interval_minutes": 15,
+            "is_active": True,
+        }
+        response = self.client.post(other_tunnel_url, data)
+        self.assertEqual(response.status_code, status_codes.HTTP_404_NOT_FOUND)
+        self.other_tunnel.refresh_from_db()
+        self.assertEqual(self.other_tunnel.upper_limit, 200.00)

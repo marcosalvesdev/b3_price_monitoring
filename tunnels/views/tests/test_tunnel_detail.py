@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from accounts.models import User
 from assets.models import Asset
+from globals.http_helpers import status_codes
 from tunnels.models import PriceTunnel
 
 
@@ -42,13 +43,13 @@ class TunnelDetailViewTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertNotEqual(response.status_code, 200)
-        self.assertIn("/accounts/login/", response.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={self.url}")
 
     def test_detail_returns_200_for_owner(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
 
     def test_detail_uses_correct_template(self):
         self.client.login(username="testuser", password="testpass123")
@@ -64,10 +65,10 @@ class TunnelDetailViewTests(TestCase):
         self.client.login(username="testuser", password="testpass123")
         url = reverse("tunnels:detail", kwargs={"pk": self.other_tunnel.pk})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, status_codes.HTTP_404_NOT_FOUND)
 
     def test_detail_returns_404_for_nonexistent_tunnel(self):
         self.client.login(username="testuser", password="testpass123")
         url = reverse("tunnels:detail", kwargs={"pk": 99999})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, status_codes.HTTP_404_NOT_FOUND)

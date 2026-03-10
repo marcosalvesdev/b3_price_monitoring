@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from accounts.models import User
 from assets.models import Asset
+from globals.http_helpers import status_codes
 from tunnels.models import PriceTunnel
 
 
@@ -32,13 +33,13 @@ class TunnelCreateViewTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertNotEqual(response.status_code, 200)
-        self.assertIn("/accounts/login/", response.url)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={self.url}")
 
     def test_create_get_returns_200_for_authenticated_user(self):
         self.client.login(username="testuser", password="testpass123")
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
 
     def test_create_uses_correct_template(self):
         self.client.login(username="testuser", password="testpass123")
@@ -69,7 +70,7 @@ class TunnelCreateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, status_codes.HTTP_302_FOUND)
         self.assertRedirects(response, reverse("tunnels:list"))
         self.assertEqual(PriceTunnel.objects.count(), 1)
         tunnel = PriceTunnel.objects.first()
@@ -85,7 +86,7 @@ class TunnelCreateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertTrue(response.context["form"].errors)
 
     def test_create_invalid_post_lower_greater_than_upper_returns_errors(self):
@@ -98,7 +99,7 @@ class TunnelCreateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertTrue(response.context["form"].errors)
 
     @patch("tunnels.forms.tunnel_create.PeriodicTunnelTasksManager")
@@ -119,5 +120,5 @@ class TunnelCreateViewTests(TestCase):
             "is_active": True,
         }
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertTrue(response.context["form"].errors)
