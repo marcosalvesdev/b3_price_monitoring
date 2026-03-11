@@ -1,3 +1,3 @@
-from assets.services.brapi.api_handler import BrapiApiHandler
+from assets.services.yfinance.api_handler import YFinanceApiHandler
 
-asset_api_handler = BrapiApiHandler
+asset_api_handler = YFinanceApiHandler
