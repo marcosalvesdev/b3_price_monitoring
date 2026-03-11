@@ -55,7 +55,7 @@ def price_check(*args, **kwargs):
         "date": timezone.now(),
     }
 
-    if tunnel.asset_price_is_above_upper_limit(asset_price):
+    if tunnel.price_is_above_tunnel_limit():
         EmailNotificationService().send_email_with_html_content(
             template_name=template_name,
             context={
@@ -74,7 +74,7 @@ def price_check(*args, **kwargs):
             "upper_limit": tunnel_upper_limit,
         }
 
-    if tunnel.asset_price_is_below_lower_limit(asset_price):
+    if tunnel.price_is_below_tunnel_limit():
         EmailNotificationService().send_email_with_html_content(
             template_name=template_name,
             context={

@@ -17,6 +17,11 @@ def tunnel_data(tunnel: PriceTunnel) -> dict:
         "asset_symbol": tunnel.asset.symbol,
         "asset_type": tunnel.asset.type,
         "asset_is_active": tunnel.asset.is_active,
+        # TODO: Add a way to the user inform the emails to be notified
+        #   in the tunnel creation and update forms, if he doesn't inform,
+        #   we will use the asset owner email as default
+        "emails_to_notification": [tunnel.asset.user.email],
+        "user_name": tunnel.asset.user.first_name or tunnel.asset.user.username,
     }
 
 
