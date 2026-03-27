@@ -1,2 +1,3 @@
+from tunnels.forms.interaval_ckeck_create import IntervalCheckCreateForm as IntervalCheckCreateForm
 from tunnels.forms.tunnel_create import TunnelCreateForm as TunnelCreateForm
 from tunnels.forms.tunnel_update import TunnelUpdateForm as TunnelUpdateForm

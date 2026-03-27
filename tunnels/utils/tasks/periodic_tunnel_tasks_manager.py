@@ -31,7 +31,7 @@ class PeriodicTunnelTasksManager:
     @staticmethod
     def create_periodic_task_for_tunnel(
         tunnel: PriceTunnel, task_name: str, task_args: list = None, task_kwargs: dict = None
-    ):
+    ) -> tuple[PeriodicTask, bool]:
         """
         Creates a periodic task for the given tunnel and task
         Args:
@@ -49,14 +49,20 @@ class PeriodicTunnelTasksManager:
         schedule, _ = IntervalSchedule.objects.get_or_create(
             every=tunnel.check_interval_minutes, period=IntervalSchedule.MINUTES
         )
-        periodic_task = PeriodicTask.objects.create(
-            interval=schedule,
-            name=f"Check Tunnel {tunnel.id} for {tunnel.asset.name}",
-            task=task_name,
+        return PeriodicTask.objects.get_or_create(
             args=json.dumps(task_args),
             kwargs=json.dumps(task_kwargs),
+            interval=schedule,
+            task=task_name,
+            defaults={
+                "name": f"Check Tunnel {tunnel.id} - {tunnel.asset.symbol} every {tunnel.check_interval_minutes} minutes"  # noqa: E501
+            },
         )
-        PeriodicTaskAssociation.objects.create(tunnel=tunnel, periodic_task=periodic_task)
+
+    def create_periodic_task_for_tunnel_and_associate(self, tunnel: PriceTunnel, task_name: str):
+        """Creates a periodic task for the given tunnel and associates it with the tunnel."""
+        periodic_task, _ = self.create_periodic_task_for_tunnel(tunnel=tunnel, task_name=task_name)
+        PeriodicTaskAssociation.objects.create(periodic_task=periodic_task, tunnel=tunnel)
 
     @staticmethod
     def delete_periodic_task_for_tunnel(tunnel: PriceTunnel):

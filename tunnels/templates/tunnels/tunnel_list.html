@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}<title>My Tunnels — B3 Monitor</title>{% endblock %}
+{% block title %}My Tunnels — B3 Monitor{% endblock %}
 
 {% block content %}
 <main class="container py-4" style="max-width: 960px;">
@@ -32,7 +32,13 @@
                             </td>
                             <td class="font-monospace fw-bold text-success">R$ {{ tunnel.lower_limit }}</td>
                             <td class="font-monospace fw-bold text-danger">R$ {{ tunnel.upper_limit }}</td>
-                            <td>{{ tunnel.check_interval_minutes }}</td>
+                            <td>
+                                {% if tunnel.check_interval_minutes %}
+                                    {{ tunnel.check_interval_minutes }}
+                                {% else %}
+                                    <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if tunnel.is_active %}
                                     <span class="badge bg-success-subtle text-success">Active</span>
@@ -43,6 +49,7 @@
                             <td class="text-end">
                                 <a href="{% url 'tunnels:detail' tunnel.id %}" class="btn btn-sm btn-outline-dark">View</a>
                                 <a href="{% url 'tunnels:delete' tunnel.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                <a href="{% url 'tunnels:interval_check_create' tunnel.id %}" class="btn btn-sm btn-outline-primary">Create Interval Check</a>
                             </td>
                         </tr>
                         {% empty %}
