@@ -45,8 +45,12 @@ jobs:
       POSTGRES_PORT: 5432
       CELERY_BROKER_URL: redis://localhost:6379/0
       CELERY_RESULT_BACKEND: redis://localhost:6379/0
+      REDIS_CACHE_URL: redis://redis:6379/0
       BASE_BRAPI_API_URL: https://brapi.dev/api
       BRAPI_API_KEY: fake-key-for-ci
+      DEFAULT_FROM_EMAIL: email.@example.com
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      EMAIL_BACKEND: django.core.mail.backends.console.EmailBackend
 
     steps:
       - uses: actions/checkout@v4
