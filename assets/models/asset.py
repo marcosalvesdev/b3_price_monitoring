@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from assets.services.brapi.asset_validator import BrapiApiAssetValidator
+from assets.services.yfinance.asset_validator import YFinanceAssetValidator
 from assets.utils.validators.asset_validator import AssetValidator
 
 
@@ -38,7 +38,7 @@ class Asset(models.Model):
             if asset.symbol == self.symbol and asset.type == self.type:
                 return None
 
-        external_validator = BrapiApiAssetValidator(symbol=self.symbol, asset_type=self.type)
+        external_validator = YFinanceAssetValidator(symbol=self.symbol, asset_type=self.type)
         validator = AssetValidator(external_validator=external_validator)
 
         if not validator.is_valid:

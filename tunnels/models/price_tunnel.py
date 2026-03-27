@@ -8,7 +8,7 @@ class PriceTunnel(models.Model):
     asset = models.ForeignKey("assets.Asset", on_delete=models.CASCADE, related_name="tunnels")
     upper_limit = models.DecimalField(max_digits=10, decimal_places=2)
     lower_limit = models.DecimalField(max_digits=10, decimal_places=2)
-    check_interval_minutes = models.PositiveIntegerField()
+    check_interval_minutes = models.PositiveIntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

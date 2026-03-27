@@ -14,7 +14,7 @@ import os
 import sys
 from pathlib import Path
 
-from decouple import config
+from decouple import Csv, config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 # Application definition
 
@@ -87,8 +87,8 @@ DATABASES = {
         "NAME": config("POSTGRES_DB"),
         "USER": config("POSTGRES_USER"),
         "PASSWORD": config("POSTGRES_PASSWORD"),
-        "HOST": config("POSTGRES_HOST", default="localhost"),
-        "PORT": config("POSTGRES_PORT", default="5432", cast=int),
+        "HOST": config("POSTGRES_HOST"),
+        "PORT": config("POSTGRES_PORT", default=5432, cast=int),
     }
 }
 
@@ -153,10 +153,22 @@ LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "assets:list"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
-# Development configs
-if DEBUG:
-    ALLOWED_HOSTS = ["*"]
+# Email configuration for development/testing
+EMAIL_BACKEND = config("EMAIL_BACKEND")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
+# Cache configuration
+REDIS_CACHE_URL = config("REDIS_CACHE_URL")
+
+if REDIS_CACHE_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_CACHE_URL,
+        }
+    }
+
+# Development configs
 RUNNING_TESTS = "test" in sys.argv or "PYTEST_VERSION" in os.environ
 
 if DEBUG and (not RUNNING_TESTS):
@@ -165,7 +177,3 @@ if DEBUG and (not RUNNING_TESTS):
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
     }
-
-# Email configuration for development/testing
-EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")

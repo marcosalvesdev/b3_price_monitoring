@@ -17,6 +17,4 @@ class TunnelValidator:
 
     @property
     def interval_is_valid(self) -> bool:
-        if self.interval is None:
-            return False
-        return self.interval > 0
+        return self.interval is None or self.interval > 0

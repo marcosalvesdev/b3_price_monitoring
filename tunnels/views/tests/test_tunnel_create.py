@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 from django.test import TestCase
 from django.urls import reverse
 
@@ -59,8 +57,7 @@ class TunnelCreateViewTests(TestCase):
         self.assertIn(self.asset, asset_queryset)
         self.assertNotIn(self.other_asset, asset_queryset)
 
-    @patch("tunnels.forms.tunnel_create.PeriodicTunnelTasksManager")
-    def test_create_valid_post_creates_tunnel(self, mock_task_manager):
+    def test_create_valid_post_creates_tunnel(self):
         self.client.login(username="testuser", password="testpass123")
         data = {
             "asset": self.asset.pk,
@@ -102,8 +99,7 @@ class TunnelCreateViewTests(TestCase):
         self.assertEqual(response.status_code, status_codes.HTTP_200_OK)
         self.assertTrue(response.context["form"].errors)
 
-    @patch("tunnels.forms.tunnel_create.PeriodicTunnelTasksManager")
-    def test_create_duplicate_tunnel_shows_error(self, mock_task_manager):
+    def test_create_duplicate_tunnel_shows_error(self):
         PriceTunnel.objects.create(
             asset=self.asset,
             upper_limit=150.00,

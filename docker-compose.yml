@@ -18,7 +18,10 @@ services:
 
   celery:
     restart: on-failure
-    build: .
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=development
     container_name: django_celery
     command: python -m celery -A core worker -l info --concurrency=2
     volumes:
@@ -30,7 +33,10 @@ services:
       - redis
 
   flower:
-    build: .
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=development
     container_name: django_flower
     command: python -m celery -A core flower --port=5555
     volumes:
@@ -44,7 +50,10 @@ services:
       - celery
 
   beat:
-    build: .
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=development
     container_name: django_beat
     command: python -m celery -A core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:

@@ -4,6 +4,7 @@ from tunnels.views import (
     TunnelCreateView,
     TunnelDeleteView,
     TunnelDetailView,
+    TunnelIntervalCheckCreateView,
     TunnelListView,
     TunnelUpdateView,
 )
@@ -16,4 +17,9 @@ urlpatterns = [
     path("<int:pk>/", TunnelDetailView.as_view(), name="detail"),
     path("<int:pk>/update/", TunnelUpdateView.as_view(), name="update"),
     path("<int:pk>/delete/", TunnelDeleteView.as_view(), name="delete"),
+    path(
+        "<int:pk>/interval-check/create/",
+        TunnelIntervalCheckCreateView.as_view(),
+        name="interval_check_create",
+    ),
 ]

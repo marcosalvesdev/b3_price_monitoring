@@ -43,8 +43,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
         mock_tunnel.lower_limit = 20.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = False
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = False
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Act
@@ -75,7 +75,7 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
         mock_tunnel.lower_limit = 20.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = True
+        mock_tunnel.price_is_above_tunnel_limit.return_value = True
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Act
@@ -105,8 +105,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
         mock_tunnel.lower_limit = 20.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = True
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = True
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Act
@@ -164,8 +164,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
 
         mock_tunnel = MagicMock()
         mock_tunnel.asset.name = "Petrobras"
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = False
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = False
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Act
@@ -192,8 +192,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
 
         mock_tunnel = MagicMock()
         mock_tunnel.asset.name = "Petrobras"
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = False
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = False
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Act
@@ -218,7 +218,7 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel = MagicMock()
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = True
+        mock_tunnel.price_is_above_tunnel_limit.return_value = True
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Act
@@ -239,8 +239,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
 
         mock_tunnel = MagicMock()
         mock_tunnel.asset.name = "Petrobras"
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = False
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = False
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         # Override limits in kwargs to float values
@@ -274,8 +274,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
         mock_tunnel.lower_limit = 20.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = True
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = False
+        mock_tunnel.price_is_above_tunnel_limit.return_value = True
+        mock_tunnel.price_is_below_tunnel_limit.return_value = False
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         price_check(**self.test_kwargs)
@@ -315,8 +315,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
         mock_tunnel.lower_limit = 20.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = True
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = True
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         price_check(**self.test_kwargs)
@@ -358,8 +358,8 @@ class TunnelAssetPriceCheckTestCase(TestCase):
         mock_tunnel.asset.name = "Petrobras"
         mock_tunnel.upper_limit = 30.0
         mock_tunnel.lower_limit = 20.0
-        mock_tunnel.asset_price_is_above_upper_limit.return_value = False
-        mock_tunnel.asset_price_is_below_lower_limit.return_value = False
+        mock_tunnel.price_is_above_tunnel_limit.return_value = False
+        mock_tunnel.price_is_below_tunnel_limit.return_value = False
         mock_tunnel_manager_class.return_value = mock_tunnel
 
         price_check(**self.test_kwargs)
