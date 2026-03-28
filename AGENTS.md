@@ -14,3 +14,4 @@ Agents should read these files before making changes to the codebase.
 ## Rules
 
 - **Always use `docker compose exec web`** to run any command in the project (e.g., `manage.py`, `coverage`, `ruff`). Never run commands directly on the host machine. This ensures project isolation and consistency with the Docker-based development environment.
+- **Keep documentation up to date** — whenever a relevant change is made to the project (new conventions, architecture decisions, commands, test rules, frontend patterns, etc.), update the affected documentation file(s): `AGENTS.md`, `CLAUDE.md`, `TESTS.md`, `FRONTEND.md`, or any other doc that describes the changed area.

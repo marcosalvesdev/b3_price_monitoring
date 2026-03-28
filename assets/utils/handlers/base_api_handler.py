@@ -40,7 +40,7 @@ class BaseApiHandler:
         except (requests.Timeout, requests.ConnectTimeout, requests.ReadTimeout):
             logger.error(f"Request to {self.api_name} API timed out.")
             if retry > 0:
-                self.get(url=url, symbol=symbol, retry=retry - 1)
+                return self.get(url=url, symbol=symbol, retry=retry - 1)
             else:
                 return {}
         except requests.RequestException as e:

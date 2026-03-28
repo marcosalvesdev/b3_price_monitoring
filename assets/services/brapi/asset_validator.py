@@ -1,8 +1,8 @@
 from assets.services.brapi.api_handler import BrapiApiHandler
-from assets.utils.validators.base_asset_validator import BaseAssertValidator
+from assets.utils.validators.base_asset_validator import BaseAssetValidator
 
 
-class BrapiApiAssetValidator(BaseAssertValidator):
+class BrapiApiAssetValidator(BaseAssetValidator):
     def __init__(self, symbol: str, asset_type: str, *args, **kwargs):
         self.symbol = symbol
         self.asset_type = asset_type
@@ -11,4 +11,4 @@ class BrapiApiAssetValidator(BaseAssertValidator):
     @property
     def is_valid(self) -> bool:
         data = self.api_handler.data
-        return not (data and not data.get("results"))
+        return bool(data and data.get("results"))
