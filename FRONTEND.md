@@ -1,6 +1,6 @@
 # Frontend Guide — B3 Price Monitoring
 
-This document defines the frontend design system, component patterns, and template conventions for the **B3 Price Monitoring** project. The UI is based on the **Dasher** admin theme (Bootstrap 5.3) and built with **Django Templates**.
+This document defines the frontend design system, component patterns, and template conventions for the **B3 Price Monitoring** project. The UI is based on a custom admin theme (Bootstrap 5.3) and built with **Django Templates**.
 
 ---
 
@@ -35,9 +35,7 @@ This document defines the frontend design system, component patterns, and templa
 
 ## Overview
 
-This is a **financial monitoring web application** for the Brazilian stock market (B3), cryptocurrencies, and ETFs. The frontend uses **Django Templates** with the **Dasher** admin theme built on **Bootstrap 5.3.3**. The UI must convey **trust, clarity, and professionalism** — consistent with fintech and investment platforms.
-
-The Dasher theme source files are located at `themes/dasher-1.0.0/` for reference.
+This is a **financial monitoring web application** for the Brazilian stock market (B3), cryptocurrencies, and ETFs. The frontend uses **Django Templates** with a custom admin theme built on **Bootstrap 5.3.3**. The UI must convey **trust, clarity, and professionalism** — consistent with fintech and investment platforms.
 
 ---
 
@@ -51,7 +49,7 @@ When implementing or troubleshooting frontend code, AI agents should consult the
 - **Django Forms Rendering**: https://docs.djangoproject.com/en/5.2/topics/forms/#rendering-fields-manually
 - **Django Messages Framework**: https://docs.djangoproject.com/en/5.2/ref/contrib/messages/
 - **Tabler Icons**: https://tabler.io/icons
-- **Dasher Theme Reference**: `themes/dasher-1.0.0/src/`
+- **Theme CSS**: `static/css/theme.css`
 
 ---
 
@@ -61,13 +59,13 @@ When implementing or troubleshooting frontend code, AI agents should consult the
 - **Financial application style** — Formal, data-driven look. Think brokerage dashboards: structured tables, clear numbers, soft neutral backgrounds, and precise alignment.
 - **Scannable at a glance** — Investors need to read prices, limits, and statuses quickly. Use typography weight and spacing to guide the eye, not decoration.
 - **Consistent pattern** — Every page follows the same layout rhythm, spacing, and component style. No one-off designs.
-- **Sidebar-driven navigation** — Following the Dasher layout pattern with a collapsible sidebar and a top navbar for user actions.
+- **Sidebar-driven navigation** — Collapsible sidebar with a top navbar for user actions.
 
 ---
 
 ## Theme Assets
 
-The project uses assets from the Dasher theme. Key dependencies:
+The project uses the following frontend dependencies:
 
 | Library | Version | Purpose |
 |---|---|---|
@@ -88,7 +86,7 @@ The theme uses **Public Sans** from Google Fonts:
 
 ## Color Palette
 
-The Dasher theme overrides Bootstrap's default palette. Use the theme's CSS custom properties and utility classes.
+The theme overrides Bootstrap's default palette. Use the theme's CSS custom properties and utility classes.
 
 ### Primary Colors
 
@@ -170,7 +168,7 @@ The theme extends Bootstrap's spacing with additional values:
 
 ### Layout Structure
 
-The Dasher theme uses a **sidebar + content area** layout:
+The theme uses a **sidebar + content area** layout:
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -232,7 +230,7 @@ All authenticated pages follow this structure:
 
 ### Sidebar
 
-The sidebar uses the Dasher `.miniSidebar` pattern:
+The sidebar uses the `.miniSidebar` pattern:
 
 ```html
 <nav id="miniSidebar" class="miniSidebar">
@@ -304,7 +302,7 @@ The top navbar handles user actions and search:
 
 ## Cards
 
-Cards are the **primary content container**. The Dasher theme uses elevated cards with rounded corners.
+Cards are the **primary content container**. The theme uses elevated cards with rounded corners.
 
 ```html
 <div class="card card-lg">
@@ -369,7 +367,7 @@ Sizes: `btn-icon` (2.5rem), `btn-icon btn-xs` (1.75rem), `btn-icon btn-sm` (2.18
 
 ## Forms
 
-All forms use standard Bootstrap form classes with Dasher theme styling:
+All forms use standard Bootstrap form classes with theme styling:
 
 ```html
 <form method="post" novalidate class="needs-validation">
@@ -417,14 +415,14 @@ The theme provides a toggle for password visibility:
 - Show non-field errors (`form.non_field_errors`) at the top of the form inside an `alert alert-danger` div.
 - Group related fields with spacing (`mb-3`).
 - Monetary fields: Use `font-monospace` on the input for number alignment.
-- Add `needs-validation` class to forms for Dasher's validation styling.
+- Add `needs-validation` class to forms for the theme's validation styling.
 - Required field labels can use `<span class="text-danger">*</span>` after the label text.
 
 ---
 
 ## Tables
 
-Use tables for list views (asset list, tunnel list, price history). The Dasher theme uses centered, hover-enabled tables with light headers.
+Use tables for list views (asset list, tunnel list, price history). The theme uses centered, hover-enabled tables with light headers.
 
 ```html
 <div class="table-responsive">
@@ -453,7 +451,7 @@ Use tables for list views (asset list, tunnel list, price history). The Dasher t
 
 - Always wrap in `table-responsive`.
 - Use `table-hover` for row highlight on hover.
-- Use `table-centered` (Dasher class) for vertical centering on all cells.
+- Use `table-centered` (theme class) for vertical centering on all cells.
 - Use `text-nowrap` to prevent cell content from wrapping.
 - Header: `<thead>` with default theme styling (gray-100 background, gray-600 text, no visible borders).
 - Empty state: Use `{% empty %}` tag with a centered muted message. Never show an empty table with just headers.
@@ -466,7 +464,7 @@ Use tables for list views (asset list, tunnel list, price history). The Dasher t
 
 ## Badges & Status Indicators
 
-The Dasher theme uses subtle background variants paired with emphasis text colors:
+The theme uses subtle background variants paired with emphasis text colors:
 
 ```html
 <!-- Active status -->
@@ -528,7 +526,7 @@ Place the messages block inside `base.html`, right after the navbar, inside the 
 
 ## Avatars
 
-The Dasher theme provides a comprehensive avatar system:
+The theme provides a comprehensive avatar system:
 
 ```html
 <!-- Image avatar -->
@@ -616,7 +614,7 @@ For icons inside colored circles (dashboard cards, stats):
 
 ## Shadows & Depth
 
-The Dasher theme defines a shadow scale via CSS custom properties:
+The theme defines a shadow scale via CSS custom properties:
 
 | Class | Usage |
 |---|---|
@@ -633,7 +631,7 @@ Colored shadows are also available: `shadow-primary`, `shadow-success`, `shadow-
 
 ## Dark Mode
 
-The Dasher theme supports dark mode via Bootstrap's `data-bs-theme` attribute:
+The theme supports dark mode via Bootstrap's `data-bs-theme` attribute:
 
 ```html
 <!-- Set on <html> or <body> -->
@@ -663,7 +661,7 @@ Theme preference is persisted in `localStorage` by the theme's `color-modes.js` 
 
 ## Detail Views
 
-Detail pages (asset detail, tunnel detail) display data in a **definition-style layout** inside a Dasher card:
+Detail pages (asset detail, tunnel detail) display data in a **definition-style layout** inside a card:
 
 ```html
 <div class="card card-lg">
@@ -736,7 +734,7 @@ Detail pages (asset detail, tunnel detail) display data in a **definition-style 
 
 ## Authentication Pages
 
-Login, registration, and password reset pages use the Dasher full-screen centered layout **without the sidebar**:
+Login, registration, and password reset pages use a full-screen centered layout **without the sidebar**:
 
 ```html
 {% block content %}
@@ -958,7 +956,7 @@ Generic delete confirmation:
 
 ### Do
 
-- Use the Dasher theme's CSS custom properties (`--ds-*`) and utility classes.
+- Use the theme's CSS custom properties (`--ds-*`) and utility classes.
 - Use `btn-primary` (green) for primary actions.
 - Use `card card-lg` for primary content containers.
 - Use Tabler Icons (`ti ti-*`) for UI icons.
