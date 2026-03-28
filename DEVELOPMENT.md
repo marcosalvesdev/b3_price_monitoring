@@ -471,28 +471,17 @@ git commit -m "chore: update Django to 5.2"
 
 ## Testing
 
-### Running tests with Docker
+For the full testing guide — including TDD workflow, conventions, test organization, mocking guidelines, coverage, and best practices — see **[TESTS.md](TESTS.md)**.
+
+**Quick reference:**
 
 ```bash
-# Run all tests (verbose, keep DB, fail fast)
+# Docker
 docker compose exec web python manage.py test -v 2 --keepdb --failfast
 
-# Run tests for a specific app
-docker compose exec web python manage.py test assets -v 2
-docker compose exec web python manage.py test tunnels -v 2
-docker compose exec web python manage.py test accounts -v 2
-
-# Run a specific test class
-docker compose exec web python manage.py test tunnels.tasks.tests -v 2
-```
-
-### Running tests locally
-
-```bash
+# Local
 python manage.py test -v 2 --keepdb --failfast
 ```
-
-> **Note:** The Django Debug Toolbar is automatically excluded during test runs to avoid interference.
 
 ---
 
@@ -622,8 +611,8 @@ The project integrates with **Brapi API** (`assets/services/brapi/`) for stocks 
 
 ### Testing
 
-14. **Tests run in a pre-push hook** — pushing will fail if tests don't pass. Use `--keepdb` to reuse the test database for speed.
-15. **The `RUNNING_TESTS` flag** in settings automatically disables Django Debug Toolbar during tests to prevent interference.
+14. **See [TESTS.md](TESTS.md)** for the full testing guide — TDD workflow, conventions, coverage, and best practices.
+15. **Tests run in a pre-push hook** — pushing will fail if tests don't pass.
 
 ### Celery & Task Monitoring
 

@@ -2,20 +2,13 @@ import logging
 
 import yfinance as yf
 
-from assets.utils.validators.base_asset_validator import BaseAssertValidator
+from assets.services.yfinance.constants import SYMBOL_MAP
+from assets.utils.validators.base_asset_validator import BaseAssetValidator
 
 logger = logging.getLogger(__name__)
 
-B3_SUFFIX = ".SA"
 
-SYMBOL_MAP = {
-    "stock": lambda s: f"{s}{B3_SUFFIX}",
-    "etf": lambda s: f"{s}{B3_SUFFIX}",
-    "crypto": lambda s: f"{s}-USD",
-}
-
-
-class YFinanceAssetValidator(BaseAssertValidator):
+class YFinanceAssetValidator(BaseAssetValidator):
     def __init__(self, symbol: str, asset_type: str, *args, **kwargs):
         self.symbol = symbol
         self.asset_type = asset_type
@@ -32,7 +25,7 @@ class YFinanceAssetValidator(BaseAssertValidator):
         try:
             ticker = yf.Ticker(yf_symbol)
             info = ticker.info
-            return not (not info or info.get("regularMarketPrice") is None)
+            return bool(info and info.get("regularMarketPrice") is not None)
         except Exception:
             logger.exception("Validation failed for symbol %s", yf_symbol)
             return False

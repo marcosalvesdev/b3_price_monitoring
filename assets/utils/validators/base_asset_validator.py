@@ -1,4 +1,7 @@
-class BaseAssertValidator:
+from abc import ABC, abstractmethod
+
+
+class BaseAssetValidator(ABC):
     @property
-    def is_valid(self) -> bool:
-        raise NotImplementedError("Subclasses must implement the is_valid property")
+    @abstractmethod
+    def is_valid(self) -> bool: ...
