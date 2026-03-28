@@ -1,0 +1,51 @@
+{% load static %}
+
+<div id="miniSidebar">
+    <div class="brand-logo">
+        <a class="d-none d-md-flex align-items-center gap-2" href="{% url 'assets:list' %}">
+            <i class="ti ti-chart-line fs-3 text-primary"></i>
+            <span class="fw-bold fs-4 site-logo-text">B3 Monitor</span>
+        </a>
+    </div>
+    <ul class="navbar-nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'assets:list' %}">
+                <span class="nav-icon"><i class="ti ti-chart-bar"></i></span>
+                <span class="text">My Assets</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'tunnels:list' %}">
+                <span class="nav-icon"><i class="ti ti-arrows-diff"></i></span>
+                <span class="text">My Tunnels</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="offcanvasNav offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+    aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <a class="d-flex align-items-center gap-2" href="{% url 'assets:list' %}">
+            <i class="ti ti-chart-line fs-3 text-primary"></i>
+            <span class="fw-bold fs-4 site-logo-text">B3 Monitor</span>
+        </a>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'assets:list' %}">
+                    <span class="nav-icon"><i class="ti ti-chart-bar"></i></span>
+                    <span class="text">My Assets</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'tunnels:list' %}">
+                    <span class="nav-icon"><i class="ti ti-arrows-diff"></i></span>
+                    <span class="text">My Tunnels</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

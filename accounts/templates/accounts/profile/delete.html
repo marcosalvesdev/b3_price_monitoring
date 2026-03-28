@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}<title>Delete Account — B3 Monitor</title>{% endblock %}
+{% block title %}Delete Account — B3 Monitor{% endblock %}
 
 {% block content %}
-<main class="container py-4" style="max-width: 960px;">
-    <h2 class="fw-semibold mb-4">Delete Account</h2>
+<h2 class="fw-semibold mb-4">Delete Account</h2>
 
-    {% include "partials/_delete_confirm.html" with title="Delete Account" item_name=user.username cancel_url=cancel_url %}
-</main>
+{% include "partials/_delete_confirm.html" with title="Delete Account" item_name=user.username cancel_url=cancel_url %}
 {% endblock %}

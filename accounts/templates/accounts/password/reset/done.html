@@ -1,17 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'base_auth.html' %}
 
-{% block title %}<title>Email Sent — B3 Monitor</title>{% endblock %}
+{% block title %}Email Sent — B3 Monitor{% endblock %}
 
 {% block content %}
-<main class="container py-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="w-100" style="max-width: 480px;">
-        <h2 class="fw-semibold mb-4 text-center">Check Your Email</h2>
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4 text-center">
-                <p class="mb-4">We've sent an email with instructions to reset your password. Please check your inbox and follow the link.</p>
-                <a href="{% url 'accounts:login' %}" class="btn btn-dark w-100">Back to Sign In</a>
+<main class="d-flex flex-column justify-content-center min-vh-100 py-5">
+    <section>
+        <div class="container">
+            <div class="row mb-8">
+                <div class="col-xl-4 offset-xl-4 col-md-12 col-12">
+                    <div class="text-center">
+                        <a href="{% url 'accounts:login' %}" class="fs-2 fw-bold d-flex align-items-center gap-2 justify-content-center mb-6 text-decoration-none">
+                            <i class="ti ti-chart-line"></i>
+                            <span>B3 Monitor</span>
+                        </a>
+                        <h1 class="mb-1">Check Your Email</h1>
+                        <p class="mb-0 text-secondary">We've sent instructions to reset your password.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-12">
+                    <div class="card card-lg mb-6">
+                        <div class="card-body p-6">
+                            <p class="mb-5">Please check your inbox and follow the link to reset your password. If you don't receive the email, check your spam folder.</p>
+                            <div class="d-grid mb-4">
+                                <a href="{% url 'accounts:login' %}" class="btn btn-primary">Back to Sign In</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </main>
 {% endblock %}

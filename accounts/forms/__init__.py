@@ -1,2 +1,4 @@
+from accounts.forms.password_change import UserPasswordChangeForm as UserPasswordChangeForm
+from accounts.forms.password_reset_confirm import UserSetPasswordForm as UserSetPasswordForm
 from accounts.forms.profile_update import ProfileUpdateForm as ProfileUpdateForm
 from accounts.forms.user_registration import UserRegistrationForm as UserRegistrationForm

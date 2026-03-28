@@ -1,6 +1,6 @@
 <div class="text-center py-5">
     <p class="text-muted mb-3">{{ message|default:"No items found." }}</p>
     {% if action_url %}
-        <a href="{{ action_url }}" class="btn btn-dark">{{ action_label|default:"Create" }}</a>
+        <a href="{{ action_url }}" class="btn btn-primary">{{ action_label|default:"Create" }}</a>
     {% endif %}
 </div>

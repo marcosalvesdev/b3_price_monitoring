@@ -3,64 +3,79 @@
 {% block title %}My Tunnels — B3 Monitor{% endblock %}
 
 {% block content %}
-<main class="container py-4" style="max-width: 960px;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-semibold mb-0">My Tunnels</h2>
-        <a href="{% url 'tunnels:create' %}" class="btn btn-dark">Create Tunnel</a>
-    </div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">My Tunnels</li>
+    </ol>
+</nav>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Asset</th>
-                            <th>Lower Limit</th>
-                            <th>Upper Limit</th>
-                            <th>Interval (min)</th>
-                            <th>Status</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tunnel in tunnels %}
-                        <tr>
-                            <td>
-                                {{ tunnel.asset.name }}
-                                <small class="text-muted">{{ tunnel.asset.symbol }}</small>
-                            </td>
-                            <td class="font-monospace fw-bold text-success">R$ {{ tunnel.lower_limit }}</td>
-                            <td class="font-monospace fw-bold text-danger">R$ {{ tunnel.upper_limit }}</td>
-                            <td>
-                                {% if tunnel.check_interval_minutes %}
-                                    {{ tunnel.check_interval_minutes }}
-                                {% else %}
-                                    <span class="text-muted">N/A</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if tunnel.is_active %}
-                                    <span class="badge bg-success-subtle text-success">Active</span>
-                                {% else %}
-                                    <span class="badge bg-danger-subtle text-danger">Inactive</span>
-                                {% endif %}
-                            </td>
-                            <td class="text-end">
-                                <a href="{% url 'tunnels:detail' tunnel.id %}" class="btn btn-sm btn-outline-dark">View</a>
-                                <a href="{% url 'tunnels:delete' tunnel.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                                <a href="{% url 'tunnels:interval_check_create' tunnel.id %}" class="btn btn-sm btn-outline-primary">Create Interval Check</a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No tunnels found.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-semibold mb-0">My Tunnels</h2>
+    <a href="{% url 'tunnels:create' %}" class="btn btn-primary">
+        <i class="ti ti-plus me-1"></i>Create Tunnel
+    </a>
+</div>
+
+{% if tunnels %}
+<div class="card card-lg">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table text-nowrap table-centered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Lower Limit</th>
+                        <th>Upper Limit</th>
+                        <th>Interval (min)</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tunnel in tunnels %}
+                    <tr>
+                        <td>
+                            <span class="fw-semibold">{{ tunnel.asset.name }}</span>
+                            <small class="text-muted ms-1">{{ tunnel.asset.symbol }}</small>
+                        </td>
+                        <td class="font-monospace fw-bold text-success">R$ {{ tunnel.lower_limit }}</td>
+                        <td class="font-monospace fw-bold text-danger">R$ {{ tunnel.upper_limit }}</td>
+                        <td>
+                            {% if tunnel.check_interval_minutes %}
+                                {{ tunnel.check_interval_minutes }}
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if tunnel.is_active %}
+                                <span class="badge bg-success-subtle text-success-emphasis">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger-subtle text-danger-emphasis">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <a href="{% url 'tunnels:detail' tunnel.id %}" class="btn btn-icon btn-ghost" title="View">
+                                <i class="ti ti-eye"></i>
+                            </a>
+                            <a href="{% url 'tunnels:delete' tunnel.id %}" class="btn btn-icon btn-ghost text-danger" title="Delete">
+                                <i class="ti ti-trash"></i>
+                            </a>
+                            {% if not tunnel.check_interval_minutes %}
+                            <a href="{% url 'tunnels:interval_check_create' tunnel.id %}" class="btn btn-icon btn-ghost text-primary" title="Create Interval Check">
+                                <i class="ti ti-clock-plus"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-</main>
+</div>
+{% else %}
+    {% url 'tunnels:create' as create_url %}
+    {% include "partials/_empty_state.html" with message="You haven't created any tunnels yet." action_url=create_url action_label="Create Tunnel" %}
+{% endif %}
 {% endblock %}

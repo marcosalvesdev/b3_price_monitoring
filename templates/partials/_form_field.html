@@ -7,6 +7,16 @@
         </div>
     {% endif %}
     {% if field.help_text %}
-        <div class="form-text">{{ field.help_text }}</div>
+        <a class="form-text text-decoration-none d-inline-flex align-items-center gap-1 mt-1"
+           data-bs-toggle="collapse"
+           href="#help_{{ field.id_for_label }}"
+           role="button"
+           aria-expanded="false"
+           aria-controls="help_{{ field.id_for_label }}">
+            <i class="ti ti-info-circle"></i> Instructions
+        </a>
+        <div class="collapse" id="help_{{ field.id_for_label }}">
+            <div class="form-text mt-1">{{ field.help_text }}</div>
+        </div>
     {% endif %}
 </div>
