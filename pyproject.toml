@@ -19,6 +19,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "bandit>=1.9.3",
+    "coverage>=7.13.5",
     "django-debug-toolbar>=6.2.0",
     "pre-commit>=4.5.1",
     "ruff>=0.15.1",
@@ -44,3 +45,18 @@ ignore = ["DJ001"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["b3_price_monitoring"]
+
+[tool.coverage.run]
+source = ["accounts", "assets", "tunnels", "globals"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/admin.py",
+    "manage.py",
+    "core/*",
+]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
