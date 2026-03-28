@@ -4,9 +4,12 @@ from django.contrib.auth.views import (
 )
 from django.urls import reverse_lazy
 
+from accounts.forms import UserPasswordChangeForm
+
 
 class UserPasswordChangeView(PasswordChangeView):
     template_name = "accounts/password/change/change.html"
+    form_class = UserPasswordChangeForm
     success_url = reverse_lazy("accounts:password_change_done")
 
     def get_context_data(self, **kwargs):

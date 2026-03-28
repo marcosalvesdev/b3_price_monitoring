@@ -1,29 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}<title>Create Tunnel — B3 Monitor</title>{% endblock %}
+{% block title %}Create Tunnel — B3 Monitor{% endblock %}
 
 {% block content %}
-<main class="container py-4" style="max-width: 960px;">
-    <h2 class="fw-semibold mb-4">Create Tunnel</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'tunnels:list' %}">My Tunnels</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create Tunnel</li>
+    </ol>
+</nav>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-            <form method="post" novalidate>
-                {% csrf_token %}
+<h2 class="fw-semibold mb-4">Create Tunnel</h2>
 
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
-                    </div>
-                {% endif %}
+<div class="card card-lg">
+    <div class="card-body p-6">
+        <form method="post" novalidate class="needs-validation">
+            {% csrf_token %}
 
-                {% for field in form %}
-                    {% include "partials/_form_field.html" with field=field %}
-                {% endfor %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                </div>
+            {% endif %}
 
-                {% include "partials/_form_actions.html" with submit_label="Create Tunnel" cancel_url=cancel_url %}
-            </form>
-        </div>
+            {% for field in form %}
+                {% include "partials/_form_field.html" with field=field %}
+            {% endfor %}
+
+            {% include "partials/_form_actions.html" with submit_label="Create Tunnel" cancel_url=cancel_url %}
+        </form>
     </div>
-</main>
+</div>
 {% endblock %}

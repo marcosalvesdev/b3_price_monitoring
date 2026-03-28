@@ -1,56 +1,60 @@
 {% extends "base.html" %}
 
-{% block title %}<title>My Profile — B3 Monitor</title>{% endblock %}
+{% block title %}My Profile — B3 Monitor{% endblock %}
 
 {% block content %}
-<main class="container py-4" style="max-width: 960px;">
-    <h2 class="fw-semibold mb-4">My Profile</h2>
+<h2 class="fw-semibold mb-4">My Profile</h2>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-            <div class="d-flex align-items-center mb-4">
-                {% if profile_user.profile.avatar %}
-                    <img src="{{ profile_user.profile.avatar.url }}" alt="Avatar" class="rounded-circle me-3" width="80" height="80" style="object-fit: cover;">
-                {% else %}
-                    <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px; font-size: 2rem;">
-                        {{ profile_user.username|make_list|first|upper }}
-                    </div>
-                {% endif %}
-                <div>
-                    <h5 class="fw-semibold mb-0">{{ profile_user.get_full_name|default:profile_user.username }}</h5>
-                    <small class="text-muted">{{ profile_user.username }}</small>
+<div class="card card-lg">
+    <div class="card-body p-6">
+        <div class="d-flex align-items-center mb-4">
+            {% if profile_user.profile.avatar %}
+                <img src="{{ profile_user.profile.avatar.url }}" alt="Avatar" class="avatar avatar-lg rounded-circle me-3">
+            {% else %}
+                <div class="avatar avatar-lg rounded-circle avatar-primary me-3">
+                    <div class="avatar-initials">{{ profile_user.username|make_list|first|upper }}</div>
                 </div>
-            </div>
-
-            <div class="row g-3">
-                <div class="col-sm-6">
-                    <small class="text-muted text-uppercase">Username</small>
-                    <p class="mb-0 fw-semibold">{{ profile_user.username }}</p>
-                </div>
-                <div class="col-sm-6">
-                    <small class="text-muted text-uppercase">Email</small>
-                    <p class="mb-0 fw-semibold">{{ profile_user.email|default:"—" }}</p>
-                </div>
-                <div class="col-sm-6">
-                    <small class="text-muted text-uppercase">First Name</small>
-                    <p class="mb-0">{{ profile_user.first_name|default:"—" }}</p>
-                </div>
-                <div class="col-sm-6">
-                    <small class="text-muted text-uppercase">Last Name</small>
-                    <p class="mb-0">{{ profile_user.last_name|default:"—" }}</p>
-                </div>
-                <div class="col-sm-6">
-                    <small class="text-muted text-uppercase">Member Since</small>
-                    <p class="mb-0 text-muted">{{ profile_user.date_joined|date:"M d, Y" }}</p>
-                </div>
-            </div>
-
-            <div class="d-flex gap-2 mt-4">
-                <a href="{% url 'accounts:profile_update' %}" class="btn btn-sm btn-outline-dark">Edit Profile</a>
-                <a href="{% url 'accounts:password_change' %}" class="btn btn-sm btn-outline-dark">Change Password</a>
-                <a href="{% url 'accounts:profile_delete' %}" class="btn btn-sm btn-outline-danger">Delete Account</a>
+            {% endif %}
+            <div>
+                <h5 class="fw-semibold mb-0">{{ profile_user.get_full_name|default:profile_user.username }}</h5>
+                <small class="text-muted">@{{ profile_user.username }}</small>
             </div>
         </div>
+
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <small class="text-muted text-uppercase">Username</small>
+                <p class="mb-0 fw-semibold">{{ profile_user.username }}</p>
+            </div>
+            <div class="col-sm-6">
+                <small class="text-muted text-uppercase">Email</small>
+                <p class="mb-0 fw-semibold">{{ profile_user.email|default:"—" }}</p>
+            </div>
+            <div class="col-sm-6">
+                <small class="text-muted text-uppercase">First Name</small>
+                <p class="mb-0">{{ profile_user.first_name|default:"—" }}</p>
+            </div>
+            <div class="col-sm-6">
+                <small class="text-muted text-uppercase">Last Name</small>
+                <p class="mb-0">{{ profile_user.last_name|default:"—" }}</p>
+            </div>
+            <div class="col-sm-6">
+                <small class="text-muted text-uppercase">Member Since</small>
+                <p class="mb-0 text-muted">{{ profile_user.date_joined|date:"M d, Y" }}</p>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <a href="{% url 'accounts:profile_update' %}" class="btn btn-sm btn-white">
+                <i class="ti ti-edit me-1"></i>Edit Profile
+            </a>
+            <a href="{% url 'accounts:password_change' %}" class="btn btn-sm btn-white">
+                <i class="ti ti-lock me-1"></i>Change Password
+            </a>
+            <a href="{% url 'accounts:profile_delete' %}" class="btn btn-sm btn-subtle-danger">
+                <i class="ti ti-trash me-1"></i>Delete Account
+            </a>
+        </div>
     </div>
-</main>
+</div>
 {% endblock %}

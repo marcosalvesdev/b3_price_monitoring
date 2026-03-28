@@ -14,8 +14,10 @@ This document covers everything you need to set up, run, test, and develop the *
 - [Running Locally (without Docker)](#running-locally-without-docker)
 - [Useful Commands](#useful-commands)
 - [Code Quality & Pre-commit](#code-quality--pre-commit)
+- [Commit Convention](#commit-convention)
 - [Testing](#testing)
 - [Architecture Overview](#architecture-overview)
+- [Design & Architectural Patterns Reference](#design--architectural-patterns-reference)
 - [Tips & Advice](#tips--advice)
 
 ---
@@ -407,6 +409,66 @@ ruff check .
 
 ---
 
+## Commit Convention
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification. Every commit message must be structured as:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Commit Types
+
+| Type | Description |
+|---|---|
+| **feat** | A new feature |
+| **fix** | A bug fix |
+| **docs** | Documentation-only changes |
+| **style** | Changes that do not affect code meaning (whitespace, formatting, semicolons) |
+| **refactor** | A code change that neither fixes a bug nor adds a feature |
+| **perf** | A code change that improves performance |
+| **test** | Adding or correcting tests |
+| **build** | Changes that affect the build system or external dependencies |
+| **ci** | Changes to CI configuration files and scripts |
+| **chore** | Other changes that don't modify src or test files |
+| **revert** | Reverts a previous commit |
+
+### Examples
+
+```bash
+# Simple feature
+git commit -m "feat: add email notification on price breach"
+
+# Feature with scope
+git commit -m "feat(tunnels): add upper limit validation"
+
+# Bug fix
+git commit -m "fix(assets): correct price format for crypto assets"
+
+# Breaking change (footer notation)
+git commit -m "feat(accounts): replace User model with custom AbstractUser" -m "BREAKING CHANGE: existing user table must be migrated"
+
+# Docs
+git commit -m "docs: add Conventional Commits section to DEVELOPMENT.md"
+
+# Chore
+git commit -m "chore: update Django to 5.2"
+```
+
+### Rules
+
+1. The **type** is mandatory and must be lowercase.
+2. The **description** must be a concise summary in imperative mood (e.g., "add", not "added" or "adds").
+3. A **scope** (in parentheses) is optional but encouraged — use the app name (`accounts`, `assets`, `tunnels`, `globals`, `core`) or a relevant module.
+4. Use `BREAKING CHANGE:` in the footer (or `!` after the type/scope) to signal breaking changes.
+5. Keep the subject line under 72 characters.
+
+---
+
 ## Testing
 
 ### Running tests with Docker
@@ -484,6 +546,50 @@ TunnelCreateForm.save()
 ### External API Integration
 
 The project integrates with **Brapi API** (`assets/services/brapi/`) for stocks and crypto data. It is used for both asset validation and price fetching, built on a base `AssetApiHandler` abstraction with retry logic (3 retries, 2-second timeout).
+
+---
+
+## Design & Architectural Patterns Reference
+
+> **Note:** The patterns listed below are **references, not strict rules**. For each feature or module, developers and agents should analyze which design and architectural patterns best fit the specific use case.
+
+### Design Patterns
+
+| Pattern | Description |
+|---|---|
+| **Factory** | Delegates object creation to a dedicated method or class, decoupling the caller from concrete implementations. |
+| **Singleton** | Ensures a class has only one instance and provides a global access point to it. |
+| **Strategy** | Defines a family of interchangeable algorithms, letting the caller switch behavior at runtime. |
+| **Observer** | Allows objects to subscribe to events and be notified automatically when state changes occur. |
+| **Decorator** | Dynamically adds responsibilities to an object without modifying its class. |
+| **Adapter** | Converts the interface of a class into another interface that a client expects. |
+| **Repository** | Abstracts data access behind a collection-like interface, separating domain logic from persistence. |
+| **Command** | Encapsulates a request as an object, allowing parameterization, queuing, and undo operations. |
+| **Builder** | Separates the construction of a complex object from its representation, enabling step-by-step creation. |
+| **Facade** | Provides a simplified interface to a complex subsystem. |
+
+### Architectural Patterns
+
+| Pattern | Description |
+|---|---|
+| **MVC (Model-View-Controller)** | Separates the application into Model (data/logic), View (presentation), and Controller (input handling). Django follows the closely related MTV (Model-Template-View) variant. |
+| **Layered Architecture** | Organizes code into horizontal layers (presentation, business logic, data access), each depending only on the layer below. |
+| **Domain-Driven Design (DDD)** | Centers the architecture around the business domain, using bounded contexts, entities, value objects, and aggregates. |
+| **Event-Driven Architecture** | Components communicate through events (messages), enabling loose coupling and asynchronous processing. |
+| **Microservices** | Decomposes the system into small, independently deployable services, each owning its data and business logic. |
+| **Hexagonal Architecture (Ports & Adapters)** | Isolates the core domain from external systems (databases, APIs, UI) through well-defined ports and adapters. |
+| **CQRS (Command Query Responsibility Segregation)** | Separates read and write models, optimizing each side independently. |
+| **Service-Oriented Architecture (SOA)** | Structures the application as a collection of loosely coupled, reusable services that communicate over a network. |
+
+### SOLID Principles
+
+| Principle | Description |
+|---|---|
+| **S — Single Responsibility** | A class should have only one reason to change. |
+| **O — Open/Closed** | Software entities should be open for extension but closed for modification. |
+| **L — Liskov Substitution** | Subtypes must be substitutable for their base types without altering correctness. |
+| **I — Interface Segregation** | Clients should not be forced to depend on interfaces they do not use. |
+| **D — Dependency Inversion** | High-level modules should depend on abstractions, not concrete implementations. |
 
 ---
 

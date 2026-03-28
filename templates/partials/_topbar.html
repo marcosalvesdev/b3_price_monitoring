@@ -1,0 +1,112 @@
+{% load static %}
+
+<div class="navbar-glass navbar navbar-expand-lg px-0 px-lg-4">
+    <div class="container-fluid px-lg-0">
+        <div class="d-flex align-items-center gap-4">
+            <!-- Mobile offcanvas toggle -->
+            <div class="d-block d-lg-none">
+                <a class="text-inherit" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                    aria-controls="offcanvasExample">
+                    <i class="ti ti-menu-2 fs-4"></i>
+                </a>
+            </div>
+            <!-- Sidebar collapse toggle (desktop) -->
+            <div class="d-none d-lg-block">
+                <a class="sidebar-toggle d-flex texttooltip p-3" href="javascript:void(0)" data-template="collapseMessage">
+                    <span class="collapse-mini">
+                        <i class="ti ti-arrow-bar-left text-secondary" style="font-size: 1.4em;"></i>
+                    </span>
+                    <span class="collapse-expanded">
+                        <i class="ti ti-arrow-bar-right text-secondary" style="font-size: 1.4em;"></i>
+                        <div id="collapseMessage" class="d-none">
+                            <span class="small">Collapse</span>
+                        </div>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <ul class="list-unstyled d-flex align-items-center mb-0 gap-2">
+            <!-- Theme toggle -->
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-ghost btn-icon rounded-circle d-flex align-items-center" type="button"
+                        aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme">
+                        <i class="ti theme-icon-active lh-1 fs-5"><i class="ti theme-icon ti-sun"></i></i>
+                        <span class="visually-hidden bs-theme-text">Toggle theme</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center active"
+                                data-bs-theme-value="light" aria-pressed="true">
+                                <i class="ti theme-icon ti ti-sun"></i>
+                                <span class="ms-2">Light</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center"
+                                data-bs-theme-value="dark" aria-pressed="false">
+                                <i class="ti theme-icon ti-moon-stars"></i>
+                                <span class="ms-2">Dark</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center"
+                                data-bs-theme-value="auto" aria-pressed="false">
+                                <i class="ti theme-icon ti-circle-half-2"></i>
+                                <span class="ms-2">Auto</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <!-- User dropdown -->
+            <li class="ms-3 dropdown">
+                <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="avatar avatar-sm rounded-circle">
+                    {% else %}
+                        <div class="avatar avatar-sm rounded-circle avatar-primary">
+                            <div class="avatar-initials">{{ user.username|make_list|first|upper }}</div>
+                        </div>
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-0">
+                    <div>
+                        <div class="d-flex gap-3 align-items-center border-dashed border-bottom px-4 py-4">
+                            {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="avatar avatar-md rounded-circle">
+                            {% else %}
+                                <div class="avatar avatar-md rounded-circle avatar-primary">
+                                    <div class="avatar-initials">{{ user.username|make_list|first|upper }}</div>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h4 class="mb-0 fs-5">{{ user.get_full_name|default:user.username }}</h4>
+                                <p class="mb-0 text-secondary small">@{{ user.username }}</p>
+                            </div>
+                        </div>
+                        <div class="p-3 d-flex flex-column gap-1">
+                            <a href="{% url 'accounts:profile' %}" class="dropdown-item d-flex align-items-center gap-2">
+                                <i class="ti ti-user"></i>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="{% url 'accounts:password_change' %}" class="dropdown-item d-flex align-items-center gap-2">
+                                <i class="ti ti-lock"></i>
+                                <span>Change Password</span>
+                            </a>
+                            <hr class="my-1">
+                            <form action="{% url 'accounts:logout' %}" method="post" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item d-flex align-items-center gap-2 text-danger w-100">
+                                    <i class="ti ti-logout"></i>
+                                    <span>Logout</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

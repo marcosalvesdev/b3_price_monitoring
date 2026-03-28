@@ -6,6 +6,8 @@ from django.contrib.auth.views import (
 )
 from django.urls import reverse_lazy
 
+from accounts.forms import UserSetPasswordForm
+
 
 class UserPasswordResetView(PasswordResetView):
     template_name = "accounts/password/reset/reset.html"
@@ -20,6 +22,7 @@ class UserPasswordResetDoneView(PasswordResetDoneView):
 
 class UserPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "accounts/password/reset/confirm.html"
+    form_class = UserSetPasswordForm
     success_url = reverse_lazy("accounts:password_reset_complete")
 
 

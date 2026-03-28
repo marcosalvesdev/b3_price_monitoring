@@ -1,50 +1,61 @@
 {% extends "base.html" %}
 
-{% block title %}<title>My Assets — B3 Monitor</title>{% endblock %}
+{% block title %}My Assets — B3 Monitor{% endblock %}
 
 {% block content %}
-<main class="container py-4" style="max-width: 960px;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-semibold mb-0">My Assets</h2>
-        <a href="{% url 'assets:create' %}" class="btn btn-dark">Create Asset</a>
-    </div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">My Assets</li>
+    </ol>
+</nav>
 
-    {% if assets %}
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Name</th>
-                            <th>Symbol</th>
-                            <th>Type</th>
-                            <th>Created</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for asset in assets %}
-                        <tr>
-                            <td class="fw-semibold">{{ asset.name }}</td>
-                            <td class="font-monospace">{{ asset.symbol }}</td>
-                            <td>
-                                <span class="badge bg-secondary-subtle text-secondary">{{ asset.get_type_display }}</span>
-                            </td>
-                            <td class="text-muted">{{ asset.created_at|date:"M d, Y" }}</td>
-                            <td class="text-end">
-                                <a href="{% url 'assets:detail' asset.pk %}" class="btn btn-sm btn-outline-dark">View</a>
-                                <a href="{% url 'assets:delete' asset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-semibold mb-0">My Assets</h2>
+    <a href="{% url 'assets:create' %}" class="btn btn-primary">
+        <i class="ti ti-plus me-1"></i>Create Asset
+    </a>
+</div>
+
+{% if assets %}
+<div class="card card-lg">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table text-nowrap table-centered table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Symbol</th>
+                        <th>Type</th>
+                        <th>Created</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for asset in assets %}
+                    <tr>
+                        <td class="fw-semibold">{{ asset.name }}</td>
+                        <td class="font-monospace">{{ asset.symbol }}</td>
+                        <td>
+                            <span class="badge bg-secondary-subtle text-secondary-emphasis">{{ asset.get_type_display }}</span>
+                        </td>
+                        <td class="text-muted">{{ asset.created_at|date:"M d, Y" }}</td>
+                        <td class="text-end">
+                            <a href="{% url 'assets:detail' asset.pk %}" class="btn btn-icon btn-ghost" title="View">
+                                <i class="ti ti-eye"></i>
+                            </a>
+                            <a href="{% url 'assets:delete' asset.pk %}" class="btn btn-icon btn-ghost text-danger" title="Delete">
+                                <i class="ti ti-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    {% else %}
-        {% include "partials/_empty_state.html" with message="You haven't added any assets yet." action_url=create_url action_label="Create Asset" %}
-    {% endif %}
-</main>
+</div>
+{% else %}
+    {% url 'assets:create' as create_url %}
+    {% include "partials/_empty_state.html" with message="You haven't added any assets yet." action_url=create_url action_label="Create Asset" %}
+{% endif %}
 {% endblock %}
